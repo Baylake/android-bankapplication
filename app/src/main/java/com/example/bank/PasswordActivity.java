@@ -4,13 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class PasswordActivity extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
+
+public class PasswordActivity extends AppCompatActivity {
+    HttpURLConnection conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +50,11 @@ public class PasswordActivity extends AppCompatActivity {
                     int2 = Integer.parseInt(Number2.getText().toString());
                     Integer ans = int1 + int2;
                     answer.setText(ans.toString());
-                    suka.setText("Sanya Huy Sosi!!!!!!!");
+                    //ЖЕСКО ТЕСТИРУЮ
+                    //startLoop();
+                    DataBase dataBase=new DataBase();
+                    dataBase.select("valera");
+                    //ЖЕСКО ТЕСТИРУЮ
                     break;
 
                 case R.id.button2:
@@ -61,4 +74,5 @@ public class PasswordActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 }
