@@ -52,9 +52,9 @@ if (!$mysql) {
 }
 //----------------
 
-//Достаем данные из таблицы(надо допилить чтобы бралась 1 запись)
-//Тест http://localhost/index.php?action=select
-if($action == "select"){
+//Достаем данные из таблицы logins
+//Тест http://localhost/index.php?action=select_login&login=valerik228
+if($action == "select_logins"){
 
     $result=$mysql->query("SELECT `user_login`,`user_password` FROM `logins` WHERE `user_login` = '$login'");
 
@@ -62,6 +62,51 @@ if($action == "select"){
         $output[]=$e;
     print(json_encode($output));
 
+}
+
+//Достаем данные из таблицы users
+//Тест http://localhost/index.php?action=select_login&login=valerik228
+if($action == "select_users"){
+
+    $result=$mysql->query("SELECT `user_first_name`,`user_last_name`,`user_patronymic`,`user_passport_data`,
+       `user_cellphone_number`,`user_email` FROM `logins` INNER JOIN `users` ON
+           (`logins`.`users_user_id`=`users`.`user_id`) WHERE `logins`.`user_login`='$login'");
+
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+
+}
+
+if($action == "select_cards"){
+
+    $result=$mysql->query("SELECT `pay_systems_supported_pay_system_name`,`member_name`,`expire_date`,`cvv_code`,
+       `pin_code` FROM `cards` INNER JOIN `logins` ON
+           (`cards`.`users_user_id`=`logins`.`users_user_id`) WHERE `logins`.`user_login`='$login'");
+
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+if($action == "select_pay_systems"){
+
+    $result=$mysql->query("SELECT `supported_pay_system_name` FROM `pay_systems`");
+
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+
+}
+
+if($action == "select_card_balance"){
+
+    $result=$mysql->query("SELECT `card_balance`.`balance` FROM `card_balance` INNER JOIN `logins` ON
+           (`card_balance`.`users_user_id`=`logins`.`users_user_id`) INNER JOIN `cards` ON (`cards`.`card_id`=`card_balance`.`cards_card_id`) WHERE `logins`.`user_login`='$login'");
+
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
 }
 
 //Добавления записи в таблицу

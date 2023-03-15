@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 03, 2023 at 09:26 AM
+-- Generation Time: Feb 04, 2023 at 01:12 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cards` (
-  `card_id` int(11) NOT NULL,
+  `card_id` varchar(45) NOT NULL,
   `users_user_id` int(11) NOT NULL,
   `pay_systems_supported_pay_system_name` varchar(45) NOT NULL,
   `member_name` varchar(45) DEFAULT NULL,
@@ -37,6 +37,13 @@ CREATE TABLE `cards` (
   `pin_code` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `cards`
+--
+
+INSERT INTO `cards` (`card_id`, `users_user_id`, `pay_systems_supported_pay_system_name`, `member_name`, `expire_date`, `cvv_code`, `pin_code`) VALUES
+('2023217755681337', 5, 'MIR', 'VALERY ZHMYSHENKO', '02 26', '228', '1337');
+
 -- --------------------------------------------------------
 
 --
@@ -44,10 +51,17 @@ CREATE TABLE `cards` (
 --
 
 CREATE TABLE `card_balance` (
-  `cards_card_id` int(11) NOT NULL,
+  `cards_card_id` varchar(45) NOT NULL,
   `users_user_id` int(11) NOT NULL,
   `balance` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `card_balance`
+--
+
+INSERT INTO `card_balance` (`cards_card_id`, `users_user_id`, `balance`) VALUES
+('2023217755681337', 5, 5000);
 
 -- --------------------------------------------------------
 
@@ -77,6 +91,15 @@ INSERT INTO `logins` (`users_user_id`, `user_login`, `user_password`) VALUES
 CREATE TABLE `pay_systems` (
   `supported_pay_system_name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `pay_systems`
+--
+
+INSERT INTO `pay_systems` (`supported_pay_system_name`) VALUES
+('MASTER CARD'),
+('MIR'),
+('VISA');
 
 -- --------------------------------------------------------
 

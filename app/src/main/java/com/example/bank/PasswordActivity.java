@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 //TODO Сделать Toast с выводом данных sql
-
+//TODO Подумать  что будет логином для регистрации
 public class PasswordActivity extends AppCompatActivity {
     HttpURLConnection conn;
 
