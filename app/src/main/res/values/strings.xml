@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bank</string>
+    <string name="header">Кошелек</string>
 </resources>
