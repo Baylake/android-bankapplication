@@ -51,9 +51,8 @@ public class PasswordActivity extends AppCompatActivity {
                     Integer ans = int1 + int2;
                     answer.setText(ans.toString());
                     //ЖЕСКО ТЕСТИРУЮ
-                    //startLoop();
-                    DataBase dataBase=new DataBase();
-                    dataBase.select("valera");
+                    DataBase dataBase = new DataBase();
+                    dataBase.insertIntoUsersAndLogins();
                     //ЖЕСКО ТЕСТИРУЮ
                     break;
 
