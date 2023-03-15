@@ -9,11 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-//TODO Вынести адрес сервера как константу!
-//TODO Adds insert method
-//TODO Adds delete method
 public class DataBase {
-    private static final String SERVER_ADDRESS = "192.168.0.112";
+    private static final String SERVER_ADDRESS = "192.168.1.208";
     private HttpURLConnection connection;
 
     //TODO Удалить startLoop когда вопросы по базе данных уйдут

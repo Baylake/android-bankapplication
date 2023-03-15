@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+//TODO Сделать Toast с выводом данных sql
 
 public class PasswordActivity extends AppCompatActivity {
     HttpURLConnection conn;
@@ -52,7 +52,7 @@ public class PasswordActivity extends AppCompatActivity {
                     answer.setText(ans.toString());
                     //ЖЕСКО ТЕСТИРУЮ
                     DataBase dataBase = new DataBase();
-                    dataBase.insertIntoUsersAndLogins();
+                    dataBase.selectLoginAndPassword("valerik228");
                     //ЖЕСКО ТЕСТИРУЮ
                     break;
 
