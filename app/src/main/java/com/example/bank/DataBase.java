@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.Exchanger;
 
 public class DataBase {
-    private static final String SERVER_ADDRESS = "192.168.0.103";
+    private static final String SERVER_ADDRESS = "192.168.0.112";
     public static final String PORT = "80";
     public ArrayList<HashMap<String, String>> mapAnswer;
     private HttpURLConnection connection;

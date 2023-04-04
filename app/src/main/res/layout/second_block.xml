@@ -32,19 +32,17 @@
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1000" />
 
-            <ImageButton
-                android:id="@+id/imageButton3"
+            <Button
+                android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerInside"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                app:srcCompat="@drawable/main_activity_plus" />
+                android:backgroundTint="#FFFFFF"
+                app:icon="@drawable/main_activity_plus"
+                app:iconGravity="textStart"
+                app:iconTint="#1C8C28" />
 
         </LinearLayout>
 
@@ -112,13 +110,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <Button
+            android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:paddingStart="1dp"
-            app:srcCompat="@drawable/main_activity_button_all_cards" />
+            android:backgroundTint="#FFFFFF"
+            android:text="@string/allCardsButton"
+            android:textColor="#0D8749" />
 
     </LinearLayout>
 

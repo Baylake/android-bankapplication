@@ -7,21 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+//TODO Просто скопировал с мейн другого адаптера. Короче все посмотреть и сделать. ЧТОБ К ОБЕДУ ВСЕ БЫЛО ГОТОВО!
+public class AllCardsRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
     private final List<BankCard> bankCards;
     private Context context;
-    public MyRecyclerViewAdapter(Context context, List<BankCard> bankCards) {
+    public AllCardsRecyclerViewAdapter(Context context, List<BankCard> bankCards) {
         this.bankCards = bankCards;
         this.inflater = LayoutInflater.from(context);
         this.context=context;
@@ -31,11 +29,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.second_block, parent, false);
-        return new ViewHolder(view);
+        return new MyRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position) {
         BankCard card = bankCards.get(position);
         holder.header.setText(R.string.header);
         DataBase data = new DataBase();
@@ -75,5 +73,4 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         }
     }
-
 }
