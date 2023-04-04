@@ -12,38 +12,45 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Exchanger;
 
-//TODO Cleanup and comments
 public class DataBase {
     private static final String SERVER_ADDRESS = "192.168.0.103";
-    private ArrayList<HashMap<String, String>> mapAnswer;
+    public static final String PORT = "80";
+    public ArrayList<HashMap<String, String>> mapAnswer;
     private HttpURLConnection connection;
 
-    //Returns data from mysql database
+    //Selects data from logins table and assigns to mapAnswer
     public void selectLogins(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=select_logins&login=" + login;
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_logins&login=" + login;
         startConnection(link);
 
     }
+
+    //Selects data from users table and assigns to mapAnswer
     public void selectUsers(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=select_users&login=" + login;
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_users&login=" + login;
         startConnection(link);
     }
+
+    //Selects data from cards table and assigns to mapAnswer
     public void selectCards(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=select_cards&login=" + login;
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_cards&login=" + login;
         startConnection(link);
     }
 
+    //Selects data from logins card_balance and assigns to mapAnswer
     public void selectCardBalance(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=select_card_balance&login=" + login;
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_card_balance&login=" + login;
         startConnection(link);
-        Log.i("mysql",mapAnswer.toString());
+       // Log.i("mysql",mapAnswer.toString());
     }
+
+    //Selects data from pay_systems table and assigns to mapAnswer
     public void selectPaySystems(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=select_pay_systems&login=" + login;
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_pay_systems&login=" + login;
         startConnection(link);
     }
 
-    //inserts in tables users and logins
+    //Inserts data into users and logins tables
     //TODO Remove hardcoded record
     public void insertIntoUsersAndLogins() {
         HashMap<String, String> map = new HashMap<>();
@@ -72,20 +79,21 @@ public class DataBase {
         String password = "1337";
         map.put("user_password", password);
 
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=insert&first_name="
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=insert&first_name="
                 + map.get("user_first_name") + "&last_name=" + map.get("user_last_name") + "&patronymic="
                 + map.get("user_patronymic") + "&passport_data=" + map.get("user_passport_data")
                 + "&cellphone_number=" + map.get("user_cellphone_number") + "&email=" + map.get("user_email")
                 + "&login=" + map.get("user_login") + "&password=" + map.get("user_password");
 
         startConnection(link);
-        Log.i("mysql",mapAnswer.toString());
+       // Log.i("mysql",mapAnswer.toString());
     }
 
+    //Truncate users and logins tables
     public void truncateUsersAndLogins() {
-        String link = "http://" + SERVER_ADDRESS + ":80/index.php?action=delete";
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=delete";
         startConnection(link);
-        Log.i("mysql",mapAnswer.toString());
+      //  Log.i("mysql",mapAnswer.toString());
 
     }
 
@@ -111,6 +119,8 @@ public class DataBase {
         }
         return ans;
     }
+
+    //Submethod JsonToArrayListHashMaps returns one hash map
     private HashMap<String,String> oneRecordToHashMap(String answer){
         HashMap<String, String> oneRecordMapAnswer = new HashMap<String, String>();
         String key = new String();
@@ -134,23 +144,21 @@ public class DataBase {
                             value += answer.charAt(i);
                         }
                     }
-
                 }
-
-
             }
         }
         oneRecordMapAnswer.put(key, value);
-        Log.i("mysql","oneRecord="+oneRecordMapAnswer);
+       // Log.i("mysql","oneRecord="+oneRecordMapAnswer);
         return oneRecordMapAnswer;
     }
 
+    //Сreates a connection to the database
     private void startConnection(String link) {
         Thread thr = new Thread(new Runnable() {
             String answer;
 
             public void run() {
-                // создаем соединение ---------------------------------->
+                // creates connection
                 try {
                     Log.i("mysql",
                             "Open connection");
@@ -166,7 +174,7 @@ public class DataBase {
                 } catch (Exception e) {
                     Log.i("mysql", "Error: " + e.getMessage());
                 }
-                // получаем ответ ---------------------------------->
+                // receives a response
                 try {
                     InputStream is = connection.getInputStream();
                     BufferedReader br = new BufferedReader(
@@ -176,25 +184,18 @@ public class DataBase {
                     while ((bfr_st = br.readLine()) != null) {
                         sb.append(bfr_st);
                     }
-                    // сформируем ответ сервера в string
-                    // обрежем в полученном ответе все, что находится за "]"
-                    // это необходимо, т.к. json ответ приходит с мусором
-                    // и если этот мусор не убрать - будет невалидным
+                    // converts string to array list hash maps
+
                     answer = sb.toString();
                     Log.i("mysql", "Server answer:" + answer);
                     if (answer.equals("null")) {
-
                         mapAnswer=new ArrayList<>();
-                        //mapAnswer=new HashMap<>();
-
                     } else {
                         mapAnswer =JsonToArrayListHashMaps(answer);
                     }
-
-
                     Log.i("mysql", "mapAnswer\n" + mapAnswer);
-                    is.close(); // закроем поток
-                    br.close(); // закроем буфер
+                    is.close(); // closes the stream
+                    br.close(); // closes the buffer
 
                 } catch (Exception e) {
                     Log.i("mysql", "Error: " + e.getMessage());
@@ -202,10 +203,7 @@ public class DataBase {
                     connection.disconnect();
                     Log.i("mysql", "Close connection");
                 }
-
-
             }
-
         });
         thr.setDaemon(true);
         thr.start();

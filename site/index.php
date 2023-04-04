@@ -45,19 +45,26 @@ if (isset($_GET["email"])) {
     $email = $_GET['email'];
     //echo $email;
 }
-//Подключение к Бд
-$mysql=new mysqli('localhost','root','root','bank');
-if (!$mysql) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-//----------------
 
+
+try {
+
+//Подключение к Бд
+    $mysql=new mysqli('localhost','root','root','bank',3307);
+    if (!$mysql) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+} catch (Exception $e) {
+    echo 'Выброшено исключение: ',  $e->getMessage(), "\n";
+}
+//
+//----------------
+//
 //Достаем данные из таблицы logins
 //Тест http://localhost/index.php?action=select_login&login=valerik228
 if($action == "select_logins"){
 
     $result=$mysql->query("SELECT `user_login`,`user_password` FROM `logins` WHERE `user_login` = '$login'");
-
     while($e=$result->fetch_assoc())
         $output[]=$e;
     print(json_encode($output));

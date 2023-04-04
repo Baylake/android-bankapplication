@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,7 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-//TODO Добавить парс карт из таблицы sql
+//TODO Сделать фрагмент с полной информацией о картах и возможных действиях(grid)
 public class MainActivity extends AppCompatActivity {
     //public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
     private MyRecyclerViewAdapter adapter;
