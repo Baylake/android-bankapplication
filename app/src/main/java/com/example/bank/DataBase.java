@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.Exchanger;
 
 public class DataBase {
-    private static final String SERVER_ADDRESS = "192.168.0.112";
+    private static final String SERVER_ADDRESS = "192.168.0.103";
     public static final String PORT = "80";
     public ArrayList<HashMap<String, String>> mapAnswer;
     private HttpURLConnection connection;
@@ -214,6 +214,32 @@ public class DataBase {
             System.out.printf("%s has been interrupted", thr.getName());
         }
     }
+    //TODO переделать mapAnswer чтобы удобно вставлять в класс
+    public ArrayList<BankCard> getBankCards(String login){
+        ArrayList<BankCard> bankCards=new ArrayList<>();
 
+        this.selectCards(login);
 
+        for(int i=0;i<this.mapAnswer.size();i++){
+            BankCard tempCard=new BankCard();
+            tempCard.cardNumber=this.mapAnswer.get(i).get("card_id");
+            tempCard.cvvCode=this.mapAnswer.get(i).get("cvv_code");
+            tempCard.date=this.mapAnswer.get(i).get("expire_date").replace(' ','/');
+            tempCard.pinCode=this.mapAnswer.get(i).get("pin_code");
+            tempCard.paySystemName=this.mapAnswer.get(i).get("pay_systems_supported_pay_system_name");
+            tempCard.memberName=this.mapAnswer.get(i).get("member_name");
+            tempCard.cardNumber=this.mapAnswer.get(i).get("card_id");
+            bankCards.add(tempCard);
+        }
+
+        this.selectCardBalance(login);
+        for(int i=0;i<bankCards.size();i++){
+            for(int j=0;j<bankCards.size();j++){
+                if(this.mapAnswer.get(i).get("cards_card_id").equals(bankCards.get(j).cardNumber)){
+                    bankCards.get(j).setBalance(this.mapAnswer.get(i).get("balance"));
+                }
+            }
+        }
+        return bankCards;
+    }
 }

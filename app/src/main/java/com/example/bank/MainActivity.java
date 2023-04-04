@@ -31,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ArrayList<BankCard> cards = new ArrayList<>();
-        BankCard card1 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000");
-        BankCard card2 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000");
+        BankCard card1 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000","MIR","1000");
+        BankCard card2 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000","MIR","1000");
         cards.add(card1);
         cards.add(card2);
 

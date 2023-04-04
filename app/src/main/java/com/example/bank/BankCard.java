@@ -6,19 +6,23 @@ public class BankCard {
     String cardNumber = "";
     String paySystemName = "";
     String memberName = "";
-    String date;
+    String date="";
     String cvvCode = "";
     String pinCode = "";
+    String balance = "";
 
-    public BankCard(String cardNumber, String paySystemName, String memberName, String date, String cvvCode, String pinCode) {
+    public BankCard(String cardNumber, String paySystemName, String memberName, String date, String cvvCode, String pinCode,String paySystem,String balance) {
         this.cardNumber = cardNumber;
         this.paySystemName = paySystemName;
         this.memberName = memberName;
         this.date = date;
         this.cvvCode = cvvCode;
         this.pinCode = pinCode;
+        this.balance=balance;
     }
+    public BankCard(){
 
+    }
     public String getCardNumber() {
         return cardNumber;
     }
@@ -66,6 +70,14 @@ public class BankCard {
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
+    public void clear(){
+        cardNumber = "";
+        paySystemName = "";
+        memberName = "";
+        date="";
+        cvvCode = "";
+        pinCode = "";
+    }
 
     @Override
     public String toString() {
@@ -73,9 +85,18 @@ public class BankCard {
                 "cardNumber='" + cardNumber + '\'' +
                 ", paySystemName='" + paySystemName + '\'' +
                 ", memberName='" + memberName + '\'' +
-                ", date=" + date +
+                ", date='" + date + '\'' +
                 ", cvvCode='" + cvvCode + '\'' +
                 ", pinCode='" + pinCode + '\'' +
+                ", balance='" + balance + '\'' +
                 '}';
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getBalance() {
+        return balance;
     }
 }
