@@ -80,7 +80,7 @@ if($action == "select_users"){
 
 if($action == "select_cards"){
 
-    $result=$mysql->query("SELECT `pay_systems_supported_pay_system_name`,`member_name`,`expire_date`,`cvv_code`,
+    $result=$mysql->query("SELECT `card_id`,`pay_systems_supported_pay_system_name`,`member_name`,`expire_date`,`cvv_code`,
        `pin_code` FROM `cards` INNER JOIN `logins` ON
            (`cards`.`users_user_id`=`logins`.`users_user_id`) WHERE `logins`.`user_login`='$login'");
 
@@ -101,7 +101,7 @@ if($action == "select_pay_systems"){
 
 if($action == "select_card_balance"){
 
-    $result=$mysql->query("SELECT `card_balance`.`balance` FROM `card_balance` INNER JOIN `logins` ON
+    $result=$mysql->query("SELECT `card_balance`.`cards_card_id`,`card_balance`.`balance` FROM `card_balance` INNER JOIN `logins` ON
            (`card_balance`.`users_user_id`=`logins`.`users_user_id`) INNER JOIN `cards` ON (`cards`.`card_id`=`card_balance`.`cards_card_id`) WHERE `logins`.`user_login`='$login'");
 
     while($e=$result->fetch_assoc())
