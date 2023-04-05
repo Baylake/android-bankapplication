@@ -56,7 +56,8 @@ public class PasswordActivity extends AppCompatActivity {
                     //ЖЕСКО ТЕСТИРУЮ
                     DataBase dataBase = new DataBase();
                     //dataBase.selectUsers("valerik228");
-                    dataBase.selectCardBalance("valerik228");
+                    dataBase.selectLogins("valerik228");
+                    Log.i("mysql",dataBase.mapAnswer.toString());
                     //ЖЕСКО ТЕСТИРУЮ
                     break;
 

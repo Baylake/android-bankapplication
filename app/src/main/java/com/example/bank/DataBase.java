@@ -12,45 +12,105 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Exchanger;
 
+/**
+ * \brief класс реализует работу с базой данных
+ *
+ * При вызове методов select.... данные возвращаются в mapAnswer
+ *
+ * Если вызывать getBankCards то данные возвращаются через return метода
+ */
 public class DataBase {
-    private static final String SERVER_ADDRESS = "192.168.0.103";
-    public static final String PORT = "80";
-    public ArrayList<HashMap<String, String>> mapAnswer;
-    private HttpURLConnection connection;
+    ///Адрес сайта, который обеспечивает доступ к базе данных
+    private static final String SERVER_ADDRESS = "192.168.0.112";
 
-    //Selects data from logins table and assigns to mapAnswer
+    ///Порт сайта, который обеспечивает доступ к бд
+    private static final String PORT = "80";
+
+    ///Преобразованный в массив хеш мап ответ базы данных
+    public ArrayList<HashMap<String, String>> mapAnswer;
+
+    /**
+     * Делает http запрос для пользователя с логином login
+     *
+     * Селектит данные о логине и пароле
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращается в mapAnswer в виде массива таких хеш мап [{user_password="ЗНАЧЕНИЕ", user_login="ЗНАЧЕНИЕ"}]
+     */
     public void selectLogins(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_logins&login=" + login;
         startConnection(link);
 
     }
 
-    //Selects data from users table and assigns to mapAnswer
+    /**
+     * Делает http запрос для пользователя с логином login
+     *
+     * Селектит данные о пользователе
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращается в mapAnswer в виде массива таких хеш мап {user_first_name="ЗНАЧЕНИЕ", user_email="ЗНАЧЕНИЕ",
+     * user_patronymic="ЗНАЧЕНИЕ", user_last_name="ЗНАЧЕНИЕ", user_cellphone_number="ЗНАЧЕНИЕ", user_passport_data="ЗНАЧЕНИЕ"}]
+     */
     public void selectUsers(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_users&login=" + login;
         startConnection(link);
     }
 
-    //Selects data from cards table and assigns to mapAnswer
+    /**
+     * Делает http запрос для пользователя с логином login
+     *
+     * Селектит данные о картах пользователя
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращается в mapAnswer в виде массива таких хеш мап [{cvv_code="ЗНАЧЕНИЕ", expire_date="ЗНАЧЕНИЕ", pin_code="ЗНАЧЕНИЕ",
+     * pay_systems_supported_pay_system_name="ЗНАЧЕНИЕ", member_name="ЗНАЧЕНИЕ", card_id="ЗНАЧЕНИЕ"}]
+     */
     public void selectCards(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_cards&login=" + login;
         startConnection(link);
     }
 
-    //Selects data from logins card_balance and assigns to mapAnswer
+    /**
+     * Делает http запрос для пользователя с логином login
+     *
+     * Селектит данные о балансе пользователя
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращается в mapAnswer в виде массива таких хеш мап [{balance="ЗНАЧЕНИЕ", cards_card_id="ЗНАЧЕНИЕ"}]
+     */
     public void selectCardBalance(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_card_balance&login=" + login;
         startConnection(link);
-       // Log.i("mysql",mapAnswer.toString());
+        // Log.i("mysql",mapAnswer.toString());
     }
 
-    //Selects data from pay_systems table and assigns to mapAnswer
+    /**
+     * Делает http запрос для пользователя с логином login
+     *
+     * Селектит платежные системы
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращается в mapAnswer в виде массива таких хеш мап [{supported_pay_system_name="ЗНАЧЕНИЕ"}]
+     */
     public void selectPaySystems(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_pay_systems&login=" + login;
         startConnection(link);
     }
 
-    //Inserts data into users and logins tables
+    /**
+     * Делает http запрос который вставляет данные в таблицы users и logins
+     *
+     * \warning *захардкожена* тестовая запись
+     *
+     * \return не проверял, но должна возвращать mapAnswer с size=0
+     *
+     */
     //TODO Remove hardcoded record
     public void insertIntoUsersAndLogins() {
         HashMap<String, String> map = new HashMap<>();
@@ -86,42 +146,69 @@ public class DataBase {
                 + "&login=" + map.get("user_login") + "&password=" + map.get("user_password");
 
         startConnection(link);
-       // Log.i("mysql",mapAnswer.toString());
     }
 
-    //Truncate users and logins tables
+    /**
+     * Делает http запрос который очищает таблицы users и logins
+     *
+     * \warning давно не тестился, может не работать из-за триггеров в базе
+     *
+     * \return не проверял, но должна возвращать mapAnswer с size=0
+     *
+     * По логике его вообще нужно удалить, но пока пусть будет
+     */
     public void truncateUsersAndLogins() {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=delete";
         startConnection(link);
-      //  Log.i("mysql",mapAnswer.toString());
-
     }
 
-    //Returns server answer in Map structure
-    ArrayList<HashMap<String, String>> JsonToArrayListHashMaps(String answer) {
-        Integer recordsCount=new Integer(0);
-        ArrayList<Integer> startSubstring=new ArrayList<Integer>();
-        ArrayList<Integer> stopSubstring=new ArrayList<Integer>();
-        ArrayList<HashMap<String, String>> ans=new ArrayList<HashMap<String, String>>();
 
-        for(int i=0;i<answer.length();i++){
-            if(answer.charAt(i)=='{'){
-                recordsCount=recordsCount+1;
+    /**
+     * Преобразует строку с ответом базы данных в массив hash map
+     *
+     * Пример строки [{"year":"2023","balance":"5000"},{"year":"2024","balance":"1020"},{"year":"2025","balance":"1550"}]
+     *
+     * Строка содержит n записей. Будет создан массив из n элементов, в котором каждая запись представлена ввиде hash map
+     *
+     * Названия ключей в map будут соответсвовать полям в базе данных
+     *
+     * Ответы null базы данных учитывается в startConnection
+     *
+     * \param[in] answer Строка, которая содержит ответ от сервера
+     *
+     * \return возвращает массив хеш мап подобного вида [{cvv_code="ЗНАЧЕНИЕ", expire_date="ЗНАЧЕНИЕ", pin_code="ЗНАЧЕНИЕ"}]
+     */
+    private ArrayList<HashMap<String, String>> JsonToArrayListHashMaps(String answer) {
+        Integer recordsCount = new Integer(0);
+        ArrayList<Integer> startSubstring = new ArrayList<Integer>();
+        ArrayList<Integer> stopSubstring = new ArrayList<Integer>();
+        ArrayList<HashMap<String, String>> ans = new ArrayList<HashMap<String, String>>();
+
+        for (int i = 0; i < answer.length(); i++) {
+            if (answer.charAt(i) == '{') {
+                recordsCount = recordsCount + 1;
                 startSubstring.add(i);
             }
-            if(answer.charAt(i)=='}'){
+            if (answer.charAt(i) == '}') {
                 stopSubstring.add(i);
             }
         }
-        //Log.i("mysql","recordAnswer="+recordsCount);
-        for(int i=0;i<recordsCount;i++){
-            ans.add(oneRecordToHashMap(answer.substring(startSubstring.get(i),stopSubstring.get(i))));
+        for (int i = 0; i < recordsCount; i++) {
+            ans.add(oneRecordToHashMap(answer.substring(startSubstring.get(i), stopSubstring.get(i))));
         }
         return ans;
     }
 
-    //Submethod JsonToArrayListHashMaps returns one hash map
-    private HashMap<String,String> oneRecordToHashMap(String answer){
+    /**
+     * Преобразует строку с одной записью в hash map
+     *
+     * Пример строки {"year":"2023","balance":"5000"}
+     *
+     * \param[in] answer Строка, которая содержит одну запись
+     *
+     * \return возвращает hash map подобного вида [{year="2023",balance="5000"}]
+     */
+    private HashMap<String, String> oneRecordToHashMap(String answer) {
         HashMap<String, String> oneRecordMapAnswer = new HashMap<String, String>();
         String key = new String();
         String value = new String();
@@ -148,15 +235,22 @@ public class DataBase {
             }
         }
         oneRecordMapAnswer.put(key, value);
-       // Log.i("mysql","oneRecord="+oneRecordMapAnswer);
         return oneRecordMapAnswer;
     }
 
-    //Сreates a connection to the database
+    /**
+     * Создает http соединение, получает данные, преобразует их и сохраняет в переменную mapAnswer
+     *
+     * Каждое соединение очищает mapAnswer
+     *
+     * Если ответ от базы данных null, то mapAnswer.size()=0
+     *
+     * \param[in] link Строка, которая содержит ссылку с http запросом
+     */
     private void startConnection(String link) {
         Thread thr = new Thread(new Runnable() {
             String answer;
-
+            HttpURLConnection connection;
             public void run() {
                 // creates connection
                 try {
@@ -189,9 +283,9 @@ public class DataBase {
                     answer = sb.toString();
                     Log.i("mysql", "Server answer:" + answer);
                     if (answer.equals("null")) {
-                        mapAnswer=new ArrayList<>();
+                        mapAnswer = new ArrayList<>();
                     } else {
-                        mapAnswer =JsonToArrayListHashMaps(answer);
+                        mapAnswer = JsonToArrayListHashMaps(answer);
                     }
                     Log.i("mysql", "mapAnswer\n" + mapAnswer);
                     is.close(); // closes the stream
@@ -214,28 +308,35 @@ public class DataBase {
             System.out.printf("%s has been interrupted", thr.getName());
         }
     }
-    //TODO переделать mapAnswer чтобы удобно вставлять в класс
-    public ArrayList<BankCard> getBankCards(String login){
-        ArrayList<BankCard> bankCards=new ArrayList<>();
+
+    /**
+     * Делает два http соединения для заполнения массива BankCard
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращает массив BankCard
+     */
+    public ArrayList<BankCard> getBankCards(String login) {
+        ArrayList<BankCard> bankCards = new ArrayList<>();
 
         this.selectCards(login);
 
-        for(int i=0;i<this.mapAnswer.size();i++){
-            BankCard tempCard=new BankCard();
-            tempCard.cardNumber=this.mapAnswer.get(i).get("card_id");
-            tempCard.cvvCode=this.mapAnswer.get(i).get("cvv_code");
-            tempCard.date=this.mapAnswer.get(i).get("expire_date").replace(' ','/');
-            tempCard.pinCode=this.mapAnswer.get(i).get("pin_code");
-            tempCard.paySystemName=this.mapAnswer.get(i).get("pay_systems_supported_pay_system_name");
-            tempCard.memberName=this.mapAnswer.get(i).get("member_name");
-            tempCard.cardNumber=this.mapAnswer.get(i).get("card_id");
+        for (int i = 0; i < this.mapAnswer.size(); i++) {
+            BankCard tempCard = new BankCard();
+            tempCard.cardNumber = this.mapAnswer.get(i).get("card_id");
+            tempCard.cvvCode = this.mapAnswer.get(i).get("cvv_code");
+            tempCard.date = this.mapAnswer.get(i).get("expire_date").replace(' ', '/');
+            tempCard.pinCode = this.mapAnswer.get(i).get("pin_code");
+            tempCard.paySystemName = this.mapAnswer.get(i).get("pay_systems_supported_pay_system_name");
+            tempCard.memberName = this.mapAnswer.get(i).get("member_name");
+            tempCard.cardNumber = this.mapAnswer.get(i).get("card_id");
             bankCards.add(tempCard);
         }
 
         this.selectCardBalance(login);
-        for(int i=0;i<bankCards.size();i++){
-            for(int j=0;j<bankCards.size();j++){
-                if(this.mapAnswer.get(i).get("cards_card_id").equals(bankCards.get(j).cardNumber)){
+        for (int i = 0; i < bankCards.size(); i++) {
+            for (int j = 0; j < bankCards.size(); j++) {
+                if (this.mapAnswer.get(i).get("cards_card_id").equals(bankCards.get(j).cardNumber)) {
                     bankCards.get(j).setBalance(this.mapAnswer.get(i).get("balance"));
                 }
             }
