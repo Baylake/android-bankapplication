@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Bank</string>
     <string name="header">Кошелек</string>
+    <string name="allCardsButton">Все карты</string>
+    <string name="cardBalance">Баланс карты</string>
+    <string name="cardNumber">Номер карты</string>
+    <string name="pay">Оплатить</string>
+    <string name="requisites">Реквизиты</string>
+    <string name="topUp">Пополнить</string>
+    <string name="settings">Настройки</string>
+    <string name="cardInRubles">Карта в рублях</string>
 </resources>

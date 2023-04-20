@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 04, 2023 at 01:12 PM
+-- Generation Time: Feb 04, 2023 at 06:26 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -42,7 +42,22 @@ CREATE TABLE `cards` (
 --
 
 INSERT INTO `cards` (`card_id`, `users_user_id`, `pay_systems_supported_pay_system_name`, `member_name`, `expire_date`, `cvv_code`, `pin_code`) VALUES
-('2023217755681337', 5, 'MIR', 'VALERY ZHMYSHENKO', '02 26', '228', '1337');
+('2023217755681337', 5, 'MIR', 'VALERY ZHMYSHENKO', '02 26', '228', '1337'),
+('2024183728288334', 5, 'MASTER CARD', 'VALERY ZHMYSHENKO', '02 26', '653', '1264'),
+('2025123456789012', 5, 'VISA', 'VALERY ZHMYSHENKO', '02 26', '432', '1337');
+
+--
+-- Triggers `cards`
+--
+DELIMITER $$
+CREATE TRIGGER `adds_card_id_and_users_user_id_into_card_balance` AFTER INSERT ON `cards` FOR EACH ROW INSERT
+INTO
+`card_balance`
+(`users_user_id`,`cards_card_id`,`balance`)
+VALUES
+(`new`.`users_user_id`,`new`.`card_id`,0)
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -61,7 +76,9 @@ CREATE TABLE `card_balance` (
 --
 
 INSERT INTO `card_balance` (`cards_card_id`, `users_user_id`, `balance`) VALUES
-('2023217755681337', 5, 5000);
+('2023217755681337', 5, 5000),
+('2024183728288334', 5, 0),
+('2025123456789012', 5, 1000);
 
 -- --------------------------------------------------------
 
@@ -178,7 +195,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,7 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-//TODO Добавить парс карт из таблицы sql
+//TODO Сделать фрагмент с полной информацией о картах и возможных действиях(grid)
 public class MainActivity extends AppCompatActivity {
     //public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
     private MyRecyclerViewAdapter adapter;
@@ -29,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ArrayList<BankCard> cards = new ArrayList<>();
-        BankCard card1 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000");
-        BankCard card2 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000");
+        BankCard card1 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000","MIR","1000");
+        BankCard card2 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000","MIR","1000");
         cards.add(card1);
         cards.add(card2);
 

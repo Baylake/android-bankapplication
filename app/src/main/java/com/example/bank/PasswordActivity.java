@@ -18,6 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 //TODO Сделать Toast с выводом данных sql
 //TODO Подумать  что будет логином для регистрации
+//ЕСЛИ НЕ РАБОТАЕТ СЕРВЕР НАДО ПРОВЕРИТЬ В DATABASE АДРЕС И ПОРТ, АККУРАТНО ОБНОВИТЬ БАЗУ ДАННЫХ
+//В iNDEX.PHP ПРОВЕРИТЬ ПОДКЛЮЧЕНИЕ К БД И ПО НАДОБНОСТИ ДОБАВИТЬ ПОРТ, ЕСЛИ ЛОКАЛЬНЫЙ СЕРВЕР ВКЛЮЧИТЬ ВАЙФАЙ
+//ПРИ ПОДРУБКЕ НА ХОСТ ИЗМЕНИТЬ ПОДКЛЮЧЕНИЕ К БАЗЕ В iNDEX.PHP,В DATABASE.JAVA ИЗМЕНИТЬ АДРЕС. СЛЕДИТЬ ЗА ПОРТАМИ!!1
 public class PasswordActivity extends AppCompatActivity {
     HttpURLConnection conn;
 
@@ -52,7 +55,9 @@ public class PasswordActivity extends AppCompatActivity {
                     answer.setText(ans.toString());
                     //ЖЕСКО ТЕСТИРУЮ
                     DataBase dataBase = new DataBase();
-                    dataBase.selectLoginAndPassword("valerik228");
+                    //dataBase.selectUsers("valerik228");
+                    dataBase.selectLogins("valerik228");
+                    Log.i("mysql",dataBase.mapAnswer.toString());
                     //ЖЕСКО ТЕСТИРУЮ
                     break;
 
