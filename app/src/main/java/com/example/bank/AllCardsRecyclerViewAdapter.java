@@ -52,8 +52,8 @@ public class AllCardsRecyclerViewAdapter extends RecyclerView.Adapter<AllCardsRe
         holder.textView16.setText(bankCards.get(pos).balance+" ₽");
 
         holder.linearLayout.removeAllViews();
-        holder.linearLayout.addView( holder.imageView4);
-
+        holder.linearLayout.addView(holder.imageView4);
+        holder.imageView4.setImageResource(bankCards.get(pos).bigImageResourceID);
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

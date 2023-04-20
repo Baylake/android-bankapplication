@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Currency;
 
 public class CashInAdapter extends BaseAdapter {
     Context context;
@@ -51,7 +52,7 @@ public class CashInAdapter extends BaseAdapter {
         TextView balance = (TextView) view.findViewById(R.id.textView10);
         TextView cardNumber = (TextView) view.findViewById(R.id.textView11);
         ImageView cardImage=view.findViewById(R.id.cardImage3);
-        balance.setText(bankCards.get(i).balance);
+        balance.setText(bankCards.get(i).balance+" ₽");
         cardNumber.setText(bankCards.get(i).cardNumber);
         cardImage.setImageResource(bankCards.get(i).smallImageResourceID);
         //icon.setImageResource(flags[i]);

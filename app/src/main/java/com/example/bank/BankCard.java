@@ -1,9 +1,5 @@
 package com.example.bank;
 
-import android.content.res.Resources;
-
-import java.util.Date;
-
 //TODO проверка валидности(регулярные выражения)
 //TODO сделать переменную, которая будет хранить id картинки карты(или даже двух картинок маленькую и большую)
 //TODO передавать логин по приложению (а то логин повсюду захардкожен)
@@ -20,8 +16,9 @@ public class BankCard {
     String balance = "";
 
     Integer smallImageResourceID;
+    Integer bigImageResourceID;
 
-    public BankCard(String cardNumber, String paySystemName, String memberName, String date, String cvvCode, String pinCode, String balance,Integer smallImageResourceID) {
+    public BankCard(String cardNumber, String paySystemName, String memberName, String date, String cvvCode, String pinCode, String balance,Integer smallImageResourceID,Integer bigImageResourceID) {
         this.cardNumber = cardNumber;
         this.paySystemName = paySystemName;
         this.memberName = memberName;
@@ -29,15 +26,19 @@ public class BankCard {
         this.cvvCode = cvvCode;
         this.pinCode = pinCode;
         this.balance = balance;
-        this.smallImageResourceID=smallImageResourceID;
+        //this.smallImageResourceID=smallImageResourceID;
         if (this.paySystemName.equals("MIR")) {
-            this.smallImageResourceID = R.drawable.main_activity_card_mir;
+            this.smallImageResourceID = R.drawable.main_activity_small_card_mir;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_mir;
         } else if (this.paySystemName.equals("VISA")) {
-            this.smallImageResourceID = R.drawable.main_activity_card_visa;
+            this.smallImageResourceID = R.drawable.main_activity_small_card_visa;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_visa;
         } else if (this.paySystemName.equals("MASTER CARD")) {
-            this.smallImageResourceID = R.drawable.main_activity_card_master_card;
+            this.smallImageResourceID = R.drawable.main_activity_small_card_master_card;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_master_card;
         }else{
             this.smallImageResourceID = R.drawable.main_activity_card_unknown;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_master_card;
         }
 
     }
@@ -102,7 +103,7 @@ public class BankCard {
         cvvCode = "";
         pinCode = "";
         balance = "";
-        smallImageResourceID = R.drawable.main_activity_card_master_card;
+        smallImageResourceID = R.drawable.main_activity_small_card_master_card;
     }
 
     @Override

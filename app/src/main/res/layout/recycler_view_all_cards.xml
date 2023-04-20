@@ -77,7 +77,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="45dp"
                 android:layout_marginRight="30dp"
-                app:srcCompat="@drawable/fragment_card_image_card4" />
+                app:srcCompat="@drawable/all_cards_activity_big_card_mir" />
 
         </LinearLayout>
 

@@ -9,8 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Exchanger;
 
 /**
  * \brief класс реализует работу с базой данных
@@ -21,7 +19,7 @@ import java.util.concurrent.Exchanger;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.1.67";
+    private static final String SERVER_ADDRESS = "192.168.0.112";
     //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
@@ -335,13 +333,17 @@ public class DataBase {
             tempCard.cardNumber = this.mapAnswer.get(i).get("card_id");
 
             if (tempCard.paySystemName.equals("MIR")) {
-                tempCard.smallImageResourceID= R.drawable.main_activity_card_mir;
+                tempCard.smallImageResourceID= R.drawable.main_activity_small_card_mir;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_mir;
             } else if (tempCard.paySystemName.equals("VISA")) {
-                tempCard.smallImageResourceID = R.drawable.main_activity_card_visa;
+                tempCard.smallImageResourceID = R.drawable.main_activity_small_card_visa;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_visa;
             } else if (tempCard.paySystemName.equals("MASTER CARD")) {
-                tempCard.smallImageResourceID = R.drawable.main_activity_card_master_card;
+                tempCard.smallImageResourceID = R.drawable.main_activity_small_card_master_card;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_master_card;
             }else{
                 tempCard.smallImageResourceID = R.drawable.main_activity_card_unknown;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_mir;
             }
             bankCards.add(tempCard);
         }
