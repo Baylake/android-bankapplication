@@ -21,7 +21,7 @@ import java.util.concurrent.Exchanger;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.0.103";
+    private static final String SERVER_ADDRESS = "192.168.1.67";
     //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
@@ -422,6 +422,24 @@ public class DataBase {
             Log.i("test","Test passed = "+testChecks.get("testPassed").toString());
             Log.i("test","Units = "+testChecks.toString());
         }
+
+    }
+    /**
+     * Делает http запрос update
+     *
+     * Изменяет баланс с карт. Вычитает change из карты с номером cardIdFrom и добавляет на карту cardIdTo
+     *
+     * cardIdFrom=cardIdFrom-change,cardIdTo=cardIdTo+change
+     *
+     * \param[in] cardIdFrom Строка, которая содержит номер карты с которой переводятся деньги
+     *
+     * \param[in] cardIdTo Строка, которая содержит номер карты на которую переводятся деньги
+     *
+     * \param[in] change Строка, которая содержит на сколько нужно изменить баланс
+     */
+    public void transfer(String cardIdFrom,String cardIdTo,String change) {
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=transfer&card_id_from="+cardIdFrom+"&card_id_to="+cardIdTo+"&change="+change;
+        startConnection(link);
 
     }
 }

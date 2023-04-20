@@ -1,5 +1,6 @@
 package com.example.bank;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,5 +49,8 @@ public class AllCardsActivity extends AppCompatActivity {
     public void startCashInActivity(View v) {
         Intent intent = new Intent(this, CashInActivity.class);
         startActivity(intent);
+        finish();
     }
+
+
 }

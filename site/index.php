@@ -46,6 +46,21 @@ if (isset($_GET["email"])) {
     //echo $email;
 }
 
+//карта с которой снимается change при transfere
+if (isset($_GET["card_id_from"])) {
+    $card_id_from = $_GET['card_id_from'];
+    //echo $card_id_from;
+}
+//карта на которую добавляется change при transfere
+if (isset($_GET["card_id_to"])) {
+    $card_id_to = $_GET['card_id_to'];
+    //echo  $card_id_to;
+}
+//на сколько изменить баланс при transfer-е
+if (isset($_GET["change"])) {
+    $change = $_GET['change'];
+    //echo  $change;
+}
 
 try {
 
@@ -125,6 +140,11 @@ if($action == "insert"){
     $usr_id= $user_id['user_id'];
     $result2=$mysql->query("UPDATE `logins` SET `user_login`='$login',`user_password`='$password' WHERE `users_user_id`='$usr_id'");
 
+}
+//Тест http://localhost/index.php?action=transfer&card_id_from=2023217755681337&card_id_to=2025123456789012&change=10
+if($action=="transfer"){
+    $result=$mysql->query("UPDATE `card_balance` SET `balance`=`balance`-'$change' WHERE `cards_card_id`='$card_id_from'");
+    $result2=$mysql->query("UPDATE `card_balance` SET `balance`=`balance`+'$change' WHERE `cards_card_id`='$card_id_to'");
 }
 
 //Очищение таблицы
