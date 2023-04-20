@@ -21,7 +21,7 @@ import java.util.concurrent.Exchanger;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.1.67";
+    private static final String SERVER_ADDRESS = "192.168.0.103";
     //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
@@ -333,6 +333,16 @@ public class DataBase {
             tempCard.paySystemName = this.mapAnswer.get(i).get("pay_systems_supported_pay_system_name");
             tempCard.memberName = this.mapAnswer.get(i).get("member_name");
             tempCard.cardNumber = this.mapAnswer.get(i).get("card_id");
+
+            if (tempCard.paySystemName.equals("MIR")) {
+                tempCard.smallImageResourceID= R.drawable.main_activity_card_mir;
+            } else if (tempCard.paySystemName.equals("VISA")) {
+                tempCard.smallImageResourceID = R.drawable.main_activity_card_visa;
+            } else if (tempCard.paySystemName.equals("MASTER CARD")) {
+                tempCard.smallImageResourceID = R.drawable.main_activity_card_master_card;
+            }else{
+                tempCard.smallImageResourceID = R.drawable.main_activity_card_unknown;
+            }
             bankCards.add(tempCard);
         }
 

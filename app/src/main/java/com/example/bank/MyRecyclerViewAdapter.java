@@ -14,17 +14,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
+
 //TODO Кнопку Out переместить из recycler_view_all_cards в activity_all_cards
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<BankCard> bankCards;
+    private final ArrayList<BankCard> bankCards;
     private Context context;
-    public MyRecyclerViewAdapter(Context context, List<BankCard> bankCards) {
+
+    public MyRecyclerViewAdapter(Context context, ArrayList<BankCard> bankCards) {
         this.bankCards = bankCards;
         this.inflater = LayoutInflater.from(context);
-        this.context=context;
+        this.context = context;
     }
 
     @NonNull
@@ -36,19 +39,23 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BankCard card = bankCards.get(position);
+
         holder.header.setText(R.string.header);
-        DataBase data = new DataBase();
-        data.selectCardBalance("valerik228");
-        holder.cardBalance1.setText(data.mapAnswer.get(0).get("balance"));
-        holder.cardBalance2.setText(data.mapAnswer.get(1).get("balance"));
-        holder.cardNumber1.setText(data.mapAnswer.get(0).get("cards_card_id"));
-        holder.cardNumber2.setText(data.mapAnswer.get(1).get("cards_card_id"));
+
+        Log.i("1", bankCards.toString());
+        holder.cardBalance1.setText(bankCards.get(0).balance);
+        holder.cardBalance2.setText(bankCards.get(1).balance);
+
+        holder.cardBalance1.setText(bankCards.get(0).cardNumber);
+        holder.cardBalance2.setText(bankCards.get(1).cardNumber);
+
+        holder.imageViewCard1.setImageResource(bankCards.get(0).smallImageResourceID);
+        holder.imageViewCard2.setImageResource(bankCards.get(1).smallImageResourceID);
         holder.allCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Recycle",context.toString()+" "+view.toString());
-                context.startActivity(new Intent(context,AllCardsActivity.class));
+                Log.i("Recycle", context.toString() + " " + view.toString());
+                context.startActivity(new Intent(context, AllCardsActivity.class));
             }
         });
     }
@@ -63,7 +70,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         final TextView header;
         final Button allCards;
         final TextView cardBalance1, cardBalance2, cardNumber1, cardNumber2;
-        ViewHolder(View view){
+
+        final ImageView imageViewCard1, imageViewCard2;
+
+        ViewHolder(View view) {
             super(view);
             imageButtonPlus = view.findViewById(R.id.button4);
             header = view.findViewById(R.id.textView5);
@@ -72,6 +82,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             cardBalance2 = view.findViewById(R.id.textView8);
             cardNumber1 = view.findViewById(R.id.textView7);
             cardNumber2 = view.findViewById(R.id.textView9);
+            imageViewCard1 = view.findViewById(R.id.imageViewCard1);
+            imageViewCard2 = view.findViewById(R.id.imageViewCard2);
 
         }
     }

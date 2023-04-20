@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/main_activity_card" />
+                app:srcCompat="@drawable/main_activity_card_mir" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/main_activity_card" />
+                app:srcCompat="@drawable/main_activity_card_mir" />
 
             <LinearLayout
                 android:layout_width="match_parent"

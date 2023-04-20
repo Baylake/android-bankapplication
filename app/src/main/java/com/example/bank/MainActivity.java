@@ -25,6 +25,7 @@ import java.util.ArrayList;
 //TODO Сделать фрагмент с полной информацией о картах и возможных действиях(grid)
 public class MainActivity extends AppCompatActivity {
     //public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+    private String login="valerik228";
     private MyRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<BankCard> cards = new ArrayList<>();
-        BankCard card1 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000","MIR","1000");
-        BankCard card2 = new BankCard("1234 5678 9012 3456", "Mir","Dmitro Eblan","1.12.2022","000","0000","MIR","1000");
-        cards.add(card1);
-        cards.add(card2);
+        DataBase dataBase=new DataBase();
+        cards=dataBase.getBankCards(login);
+//        BankCard card1 = new BankCard("1234 5678 9012 3456", "MIR","Dmitro Eblan","1.12.2022","000","0000","1000");
+//        BankCard card2 = new BankCard("1234 5678 9012 3456", "MIR","Dmitro Eblan","1.12.2022","000","0000","1000");
+//        cards.add(card1);
+//        cards.add(card2);
 
 
 

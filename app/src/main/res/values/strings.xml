@@ -9,17 +9,4 @@
     <string name="topUp">Пополнить</string>
     <string name="settings">Настройки</string>
     <string name="cardInRubles">Карта в рублях</string>
-    <string name="EnterPassword">Введите пароль</string>
-    <string name="Digit_1">1</string>
-    <string name="Digit_2">2</string>
-    <string name="Digit_3">3</string>
-    <string name="Digit_4">4</string>
-    <string name="Digit_5">5</string>
-    <string name="Digit_6">6</string>
-    <string name="Digit_7">7</string>
-    <string name="Digit_8">8</string>
-    <string name="Digit_9">9</string>
-    <string name="Digit_0">0</string>
-    <string name="ButtonDelete">Кнопка delete</string>
-
 </resources>

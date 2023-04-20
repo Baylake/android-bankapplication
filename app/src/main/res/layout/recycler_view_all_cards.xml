@@ -108,72 +108,7 @@
                 android:text="@string/cardInRubles" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:maxWidth="116dp"
-                android:maxHeight="89dp"
-                android:text="@string/pay"
-                app:icon="@drawable/recycle_view_all_cards_icon_arrow"
-                app:iconGravity="textTop"
-                app:iconSize="40dp" />
-
-            <Button
-                android:id="@+id/button12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:maxWidth="116dp"
-                android:maxHeight="89dp"
-                android:text="@string/topUp"
-                app:icon="@drawable/recycle_view_all_cards_icon_top_up"
-                app:iconGravity="top"
-                app:iconSize="40dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:maxWidth="116dp"
-                android:text="@string/requisites"
-                app:icon="@drawable/recycle_view_all_cards_icon_extract"
-                app:iconGravity="top"
-                app:iconSize="40dp" />
-
-            <Button
-                android:id="@+id/button14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:maxWidth="116dp"
-                android:maxHeight="89dp"
-                android:text="@string/settings"
-                app:icon="@drawable/recycle_view_all_cards_icon_settings"
-                app:iconGravity="top"
-                app:iconSize="40dp" />
-        </LinearLayout>
 
     </LinearLayout>
 
