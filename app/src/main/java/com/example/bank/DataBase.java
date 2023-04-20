@@ -21,7 +21,8 @@ import java.util.concurrent.Exchanger;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.0.112";
+    private static final String SERVER_ADDRESS = "192.168.1.67";
+    //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
     private static final String PORT = "80";
@@ -86,7 +87,7 @@ public class DataBase {
     public void selectCardBalance(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_card_balance&login=" + login;
         startConnection(link);
-        // Log.i("mysql",mapAnswer.toString());
+
     }
 
     /**
@@ -160,6 +161,7 @@ public class DataBase {
     public void truncateUsersAndLogins() {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=delete";
         startConnection(link);
+
     }
 
 
@@ -256,7 +258,7 @@ public class DataBase {
                 try {
                     Log.i("mysql",
                             "Open connection");
-
+                    mapAnswer = new ArrayList<>();
                     connection = (HttpURLConnection) new URL(link).openConnection();
                     connection.setReadTimeout(10000);
                     connection.setConnectTimeout(15000);
@@ -267,6 +269,7 @@ public class DataBase {
 
                 } catch (Exception e) {
                     Log.i("mysql", "Error: " + e.getMessage());
+                    return;
                 }
                 // receives a response
                 try {
@@ -283,7 +286,7 @@ public class DataBase {
                     answer = sb.toString();
                     Log.i("mysql", "Server answer:" + answer);
                     if (answer.equals("null")) {
-                        mapAnswer = new ArrayList<>();
+                        //mapAnswer = new ArrayList<>();
                     } else {
                         mapAnswer = JsonToArrayListHashMaps(answer);
                     }
@@ -342,5 +345,73 @@ public class DataBase {
             }
         }
         return bankCards;
+    }
+    /**
+     * Тест. Проверяет работу всех методов select
+     *
+     * Если завершился успешно, выведется лог по тегом test, Test passed = true
+     *
+     * Если будет ошибка хотя бы в 1 методе, выведется строка с отметками завершенности методов
+     *
+     * Если все методы не прошли тест, то проблема в сервере/настройках адреса сети, портах...
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращает лог по тегом test, в котором выводится результаты выполнения теста
+     */
+    public void test_allSelectMethods_allSelectMethodsAreWorking(String login){
+        //Arrange
+        HashMap<String,Boolean> testChecks=new HashMap<>();
+        //Act
+        this.selectLogins(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectLogins",true);
+        }
+        else{
+            testChecks.put("selectLogins",false);
+        }
+        this.selectCardBalance(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectCardBalance",true);
+        }
+        else{
+            testChecks.put("selectCardBalance",false);
+        }
+        this.selectCards(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectCards",true);
+        }
+        else{
+            testChecks.put("selectCards",false);
+        }
+        this.selectPaySystems(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectPaySystems",true);
+        }
+        else{
+            testChecks.put("selectPaySystems",false);
+        }
+        this.selectUsers(login+"21");
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectUsers",true);
+        }
+        else{
+            testChecks.put("selectUsers",false);
+        }
+        if(testChecks.get("selectLogins")&&testChecks.get("selectCardBalance")&& testChecks.get("selectCards")
+        &&testChecks.get("selectPaySystems")&&testChecks.get("selectUsers")){
+            testChecks.put("testPassed",true);
+        }
+        else{
+            testChecks.put("testPassed",false);
+        }
+        if(testChecks.get("testPassed")){
+            Log.i("test","Test passed = "+testChecks.get("testPassed").toString());
+        }
+        else{
+            Log.i("test","Test passed = "+testChecks.get("testPassed").toString());
+            Log.i("test","Units = "+testChecks.toString());
+        }
+
     }
 }
