@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //int[] colors = {Color.parseColor("#1aaa6f"),Color.parseColor("#44ccb6"),Color.WHITE,Color.WHITE};
+        // Устанавливаем градиентный фон для корневого представления
+        View view = findViewById(R.id.ConstraintLayoutMainActivity);
+        view.setBackground(AnimatedBackground.createGradient());
+
         ArrayList<BankCard> cards = new ArrayList<>();
         DataBase dataBase=new DataBase();
         cards=dataBase.getBankCards(login);
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //        pages.add("Goat");
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
+
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MyRecyclerViewAdapter(this, cards);
         //adapter = new MyRecyclerViewAdapter(this, viewColors, pages);

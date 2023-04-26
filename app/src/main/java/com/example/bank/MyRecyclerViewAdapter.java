@@ -43,11 +43,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.header.setText(R.string.header);
 
         Log.i("1", bankCards.toString());
-        holder.cardBalance1.setText(bankCards.get(0).balance);
-        holder.cardBalance2.setText(bankCards.get(1).balance);
+        holder.cardBalance1.setText(bankCards.get(0).balance+" ₽");
+        holder.cardBalance2.setText(bankCards.get(1).balance+" ₽");
 
-        holder.cardBalance1.setText(bankCards.get(0).cardNumber);
-        holder.cardBalance2.setText(bankCards.get(1).cardNumber);
+        holder.cardNumber1.setText(bankCards.get(0).paySystemName+" ** "+bankCards.get(0).cardNumber.substring(12));
+        holder.cardNumber2.setText(bankCards.get(1).paySystemName+" ** "+bankCards.get(1).cardNumber.substring(12));
 
         holder.imageViewCard1.setImageResource(bankCards.get(0).smallImageResourceID);
         holder.imageViewCard2.setImageResource(bankCards.get(1).smallImageResourceID);

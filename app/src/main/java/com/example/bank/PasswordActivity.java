@@ -1,9 +1,12 @@
 package com.example.bank;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -37,6 +40,9 @@ public final Context context = this;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+
+
+
         ImageButton button1 = findViewById(R.id.image_Button1);
         ImageButton button2 = findViewById(R.id.image_Button2);
         ImageButton button3 = findViewById(R.id.image_Button3);
@@ -48,6 +54,7 @@ public final Context context = this;
         ImageButton button9 = findViewById(R.id.image_Button9);
         ImageButton button0 = findViewById(R.id.image_Button0);
         ImageButton button_delete = findViewById(R.id.image_ButtonDelete);
+
         button1.setOnClickListener(OnClickListener);
         button2.setOnClickListener(OnClickListener);
         button3.setOnClickListener(OnClickListener);
@@ -74,6 +81,7 @@ public final Context context = this;
             ImageView three = findViewById(R.id.imageView_setThree);
             ImageView four = findViewById(R.id.imageView_setFour);
             ImageView five = findViewById(R.id.imageView_setFive);
+            Resources resources = getResources();
             if (v.getId()==R.id.image_ButtonDelete)
             {
                 if (count > 0) {
@@ -87,21 +95,21 @@ public final Context context = this;
             }
             switch (count) {
                 case 0:
-                    one.setImageResource(R.drawable.black_circle);
-                    two.setImageResource(R.drawable.black_circle);
-                    three.setImageResource(R.drawable.black_circle);
-                    four.setImageResource(R.drawable.black_circle);
-                    five.setImageResource(R.drawable.black_circle);
+                    one.setImageResource(R.drawable.indicator);
+                    two.setImageResource(R.drawable.indicator);
+                    three.setImageResource(R.drawable.indicator);
+                    four.setImageResource(R.drawable.indicator);
+                    five.setImageResource(R.drawable.indicator);
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
                     Log.d("count","count = 0");
                     break;
                 case 1:
-                    one.setImageResource(R.drawable.green_circle);
-                    two.setImageResource(R.drawable.black_circle);
-                    three.setImageResource(R.drawable.black_circle);
-                    four.setImageResource(R.drawable.black_circle);
-                    five.setImageResource(R.drawable.black_circle);
+                    one.setImageResource(R.drawable.indicator_green);
+                    two.setImageResource(R.drawable.indicator);
+                    three.setImageResource(R.drawable.indicator);
+                    four.setImageResource(R.drawable.indicator);
+                    five.setImageResource(R.drawable.indicator);
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
 Log.d("count","count = 1");
@@ -110,61 +118,61 @@ Log.d("count","count = 1");
                     //dataBase.selectUsers("valerik228");
                     break;
                 case 2:
-                    one.setImageResource(R.drawable.green_circle);
-                    two.setImageResource(R.drawable.green_circle);
-                    three.setImageResource(R.drawable.black_circle);
-                    four.setImageResource(R.drawable.black_circle);
-                    five.setImageResource(R.drawable.black_circle);
+                    one.setImageResource(R.drawable.indicator_green);
+                    two.setImageResource(R.drawable.indicator_green);
+                    three.setImageResource(R.drawable.indicator);
+                    four.setImageResource(R.drawable.indicator);
+                    five.setImageResource(R.drawable.indicator);
                     Log.d("count","count = 2");
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
                     break;
                 case 3:
-                    one.setImageResource(R.drawable.green_circle);
-                    two.setImageResource(R.drawable.green_circle);
-                    three.setImageResource(R.drawable.green_circle);
-                    four.setImageResource(R.drawable.black_circle);
-                    five.setImageResource(R.drawable.black_circle);
+                    one.setImageResource(R.drawable.indicator_green);
+                    two.setImageResource(R.drawable.indicator_green);
+                    three.setImageResource(R.drawable.indicator_green);
+                    four.setImageResource(R.drawable.indicator);
+                    five.setImageResource(R.drawable.indicator);
                     Log.d("count","count = 3");
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
                     break;
                 case 4:
-                    one.setImageResource(R.drawable.green_circle);
-                    two.setImageResource(R.drawable.green_circle);
-                    three.setImageResource(R.drawable.green_circle);
-                    four.setImageResource(R.drawable.green_circle);
-                    five.setImageResource(R.drawable.black_circle);
+                    one.setImageResource(R.drawable.indicator_green);
+                    two.setImageResource(R.drawable.indicator_green);
+                    three.setImageResource(R.drawable.indicator_green);
+                    four.setImageResource(R.drawable.indicator_green);
+                    five.setImageResource(R.drawable.indicator);
                     Log.d("count","count = 4");
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
                     break;
                 case 5:
-                    one.setImageResource(R.drawable.green_circle);
-                    two.setImageResource(R.drawable.green_circle);
-                    three.setImageResource(R.drawable.green_circle);
-                    four.setImageResource(R.drawable.green_circle);
-                    five.setImageResource(R.drawable.green_circle);
+                    one.setImageResource(R.drawable.indicator_green);
+                    two.setImageResource(R.drawable.indicator_green);
+                    three.setImageResource(R.drawable.indicator_green);
+                    four.setImageResource(R.drawable.indicator_green);
+                    five.setImageResource(R.drawable.indicator_green);
                     Log.d("count","count = 5");
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
                     if (EnteredPass.equals(CorrectPass)) {
                         startMainActivity(v);
                         count = 0;
-                        one.setImageResource(R.drawable.black_circle);
-                        two.setImageResource(R.drawable.black_circle);
-                        three.setImageResource(R.drawable.black_circle);
-                        four.setImageResource(R.drawable.black_circle);
-                        five.setImageResource(R.drawable.black_circle);
+                        one.setImageResource(R.drawable.indicator);
+                        two.setImageResource(R.drawable.indicator);
+                        three.setImageResource(R.drawable.indicator);
+                        four.setImageResource(R.drawable.indicator);
+                        five.setImageResource(R.drawable.indicator);
                         EnteredPass = "";
                     }
                     else {
                         count = 0;
-                        one.setImageResource(R.drawable.black_circle);
-                        two.setImageResource(R.drawable.black_circle);
-                        three.setImageResource(R.drawable.black_circle);
-                        four.setImageResource(R.drawable.black_circle);
-                        five.setImageResource(R.drawable.black_circle);
+                        one.setImageResource(R.drawable.indicator);
+                        two.setImageResource(R.drawable.indicator);
+                        three.setImageResource(R.drawable.indicator);
+                        four.setImageResource(R.drawable.indicator);
+                        five.setImageResource(R.drawable.indicator);
                         EnteredPass = "";
                         Log.i("count",EnteredPass);
                         Log.d("count","count = 0");

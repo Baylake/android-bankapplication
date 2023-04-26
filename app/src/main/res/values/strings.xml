@@ -22,7 +22,7 @@
     <string name="Digit_8">8</string>
     <string name="Digit_9">9</string>
     <string name="Digit_0">0</string>
-    <string name="ButtonDelete">Кнопка delete</string>
+    <string name="ButtonDelete"></string>
 
 
 </resources>
