@@ -2,11 +2,14 @@ package com.example.bank;
 
 import android.util.Log;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -444,4 +447,15 @@ public class DataBase {
         startConnection(link);
 
     }
+    public void selectDollarAndEuroCurrencyRate(){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_dollar_and_euro";
+        startConnection(link);
+        for(int i=0;i<mapAnswer.size();i++){
+            mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
+        }
+
+
+    }
+
+
 }

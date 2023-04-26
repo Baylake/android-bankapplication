@@ -12,6 +12,12 @@
     <string name="Transfer">Перевести</string>
     <string name="Swap">Поменять местами</string>
     <string name="EnterPassword">Введите пароль</string>
+    <string name="Currency">Валюта</string>
+    <string name="Metal">Металл</string>
+    <string name="Code">Код</string>
+    <string name="CurrencyRate">Курс</string>
+    <string name="CurrencyRateExample">12.122</string>
+    <string name="AllRates">Все курсы</string>
     <string name="Digit_1">1</string>
     <string name="Digit_2">2</string>
     <string name="Digit_3">3</string>

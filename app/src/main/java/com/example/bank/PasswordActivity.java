@@ -40,9 +40,8 @@ public final Context context = this;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
-
-
-
+        DataBase dataBase=new DataBase();
+        dataBase.selectDollarAndEuroCurrencyRate();
         ImageButton button1 = findViewById(R.id.image_Button1);
         ImageButton button2 = findViewById(R.id.image_Button2);
         ImageButton button3 = findViewById(R.id.image_Button3);

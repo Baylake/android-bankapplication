@@ -131,6 +131,17 @@ if($action == "select_card_balance"){
     print(json_encode($output));
 }
 
+//http://localhost/index.php?action=select_dollar_and_euro
+if($action == "select_dollar_and_euro"){
+    $date=date('Y-m-d', (time()-86400));
+    $result=$mysql->query("SELECT * FROM `currency` WHERE (`date`='$date' and `char_code`='USD') or (`date`='$date' and `char_code`='EUR')");
+
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+
 //Добавления записи в таблицу
 //Тест http://localhost/index.php?action=insert&first_name=Valery&last_name=Zhmyshenko&patronymic=Albertovich&passport_data=20221337228&cellphone_number=89009601337&email=valeraborov@yandex.ru&login=valerik228&password=1337
 if($action == "insert"){
