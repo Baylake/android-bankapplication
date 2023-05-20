@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bank</string>
+    <string name="app_name">Donskoy Bank</string>
     <string name="header">Кошелек</string>
     <string name="allCardsButton">Все карты</string>
     <string name="cardBalance">Баланс карты</string>
@@ -9,4 +9,33 @@
     <string name="topUp">Пополнить</string>
     <string name="settings">Настройки</string>
     <string name="cardInRubles">Карта в рублях</string>
+    <string name="Transfer">Перевести</string>
+    <string name="Swap">Поменять местами</string>
+    <string name="EnterPassword">Введите пароль</string>
+    <string name="Currency">Валюта</string>
+    <string name="Metal">Металл</string>
+    <string name="Code">Код</string>
+    <string name="CurrencyRate">Курс</string>
+    <string name="CurrencyRateExample">12.122</string>
+    <string name="CharCodeExample">USD</string>
+    <string name="currencyNameExample">Доллар США</string>
+    <string name="accountNumber">Номер счета</string>
+    <string name="amount">Сумма</string>
+    <string name="AllRates">Все курсы</string>
+    <string name="Digit_1">1</string>
+    <string name="Digit_2">2</string>
+    <string name="Digit_3">3</string>
+    <string name="Digit_4">4</string>
+    <string name="Digit_5">5</string>
+    <string name="Digit_6">6</string>
+    <string name="Digit_7">7</string>
+    <string name="Digit_8">8</string>
+    <string name="Digit_9">9</string>
+    <string name="Digit_0">0</string>
+    <string name="ButtonDelete"></string>
+    <string name="EnterLogin">Введите логин</string>
+    <string name="Login">Логин</string>
+    <string name="Password">Пароль</string>
+
+
 </resources>

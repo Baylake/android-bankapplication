@@ -1,28 +1,51 @@
 package com.example.bank;
 
-import java.util.Date;
 //TODO проверка валидности(регулярные выражения)
+//TODO передавать логин по приложению (а то логин повсюду захардкожен)
+//TODO нарисовать маленькую и большую картинку для карт MIR VISA MASTERCARD!
+//TODO пройтись по всем xml и переименовать элементы
+//Золотая-мир, Зеленая мастеркард, Синяя-visa
 public class BankCard {
     String cardNumber = "";
     String paySystemName = "";
     String memberName = "";
-    String date="";
+    String date = "";
     String cvvCode = "";
     String pinCode = "";
     String balance = "";
 
-    public BankCard(String cardNumber, String paySystemName, String memberName, String date, String cvvCode, String pinCode,String paySystem,String balance) {
+    Integer smallImageResourceID;
+    Integer bigImageResourceID;
+
+    public BankCard(String cardNumber, String paySystemName, String memberName, String date, String cvvCode, String pinCode, String balance,Integer smallImageResourceID,Integer bigImageResourceID) {
         this.cardNumber = cardNumber;
         this.paySystemName = paySystemName;
         this.memberName = memberName;
         this.date = date;
         this.cvvCode = cvvCode;
         this.pinCode = pinCode;
-        this.balance=balance;
-    }
-    public BankCard(){
+        this.balance = balance;
+        //this.smallImageResourceID=smallImageResourceID;
+        if (this.paySystemName.equals("MIR")) {
+            this.smallImageResourceID = R.drawable.main_activity_small_card_mir;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_mir;
+        } else if (this.paySystemName.equals("VISA")) {
+            this.smallImageResourceID = R.drawable.main_activity_small_card_visa;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_visa;
+        } else if (this.paySystemName.equals("MASTER CARD")) {
+            this.smallImageResourceID = R.drawable.main_activity_small_card_master_card;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_master_card;
+        }else{
+            this.smallImageResourceID = R.drawable.main_activity_card_unknown;
+            this.bigImageResourceID = R.drawable.all_cards_activity_big_card_master_card;
+        }
 
     }
+
+    public BankCard() {
+
+    }
+
     public String getCardNumber() {
         return cardNumber;
     }
@@ -70,13 +93,16 @@ public class BankCard {
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
-    public void clear(){
+
+    public void clear() {
         cardNumber = "";
         paySystemName = "";
         memberName = "";
-        date="";
+        date = "";
         cvvCode = "";
         pinCode = "";
+        balance = "";
+        smallImageResourceID = R.drawable.main_activity_small_card_master_card;
     }
 
     @Override
@@ -89,6 +115,7 @@ public class BankCard {
                 ", cvvCode='" + cvvCode + '\'' +
                 ", pinCode='" + pinCode + '\'' +
                 ", balance='" + balance + '\'' +
+                ", smallImageResourceID=" + smallImageResourceID +
                 '}';
     }
 
@@ -98,5 +125,8 @@ public class BankCard {
 
     public String getBalance() {
         return balance;
+    }
+    public void setSmallImageResourceID(int smallImageResourceID) {
+        this.smallImageResourceID = smallImageResourceID;
     }
 }

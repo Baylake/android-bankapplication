@@ -12,6 +12,7 @@ if (isset($_GET["action"])) {
     //echo $action;
 }
 
+
 if (isset($_GET["login"])) {
     $login = $_GET['login'];
     //echo $login;
@@ -46,11 +47,48 @@ if (isset($_GET["email"])) {
     //echo $email;
 }
 
+if (isset($_GET["currency_char_code"])) {
+    $currency_char_code = $_GET['currency_char_code'];
+    //echo $login;
+}
+
+if (isset($_GET["number_of_days"])) {
+    $number_of_days = $_GET['number_of_days'];
+    //echo $login;
+}
+
+//карта с которой снимается change при transfere
+if (isset($_GET["card_id_from"])) {
+    $card_id_from = $_GET['card_id_from'];
+    //echo $card_id_from;
+}
+//карта на которую добавляется change при transfere
+if (isset($_GET["card_id_to"])) {
+    $card_id_to = $_GET['card_id_to'];
+    //echo  $card_id_to;
+}
+//на сколько изменить баланс при transfer-е
+if (isset($_GET["change"])) {
+    $change = $_GET['change'];
+    //echo  $change;
+}
+
+//номер карты для cardExists
+if (isset($_GET["card_id"])) {
+    $card_id = $_GET['card_id'];
+    //echo  $card_id;
+}
+
+//user_id Для cardExists
+if (isset($_GET["user_id"])) {
+    $user_id = $_GET['user_id'];
+    //echo  $card_id;
+}
 
 try {
 
 //Подключение к Бд
-    $mysql=new mysqli('localhost','root','root','bank',3307);
+    $mysql=new mysqli('mysql-ezhost.alwaysdata.net','ezhost','ezzhost','ezhost_bank');
     if (!$mysql) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -116,6 +154,28 @@ if($action == "select_card_balance"){
     print(json_encode($output));
 }
 
+//http://localhost/index.php?action=select_currency_rate&currency_char_code=USD&number_of_days=30
+if($action == "select_currency_rate"){
+    $date_max=date('Y-m-d', (time()));
+    $date_min=date('Y-m-d', (time()-86400*$number_of_days));
+    $result=$mysql->query("SELECT * FROM `currency` WHERE `char_code`='$currency_char_code' and (`date`>='$date_min' and `date`<='$date_max')");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+//http://localhost/index.php?action=select_currency_rate&currency_char_code=USD&number_of_days=30
+if($action == "select_all_currency_rates"){
+    $date_max=date('Y-m-d', (time()));
+    $date_min=date('Y-m-d', (time()-86400*$number_of_days));
+    $result=$mysql->query("SELECT * FROM `currency` WHERE `date`>='$date_min' and `date`<='$date_max'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+
+
 //Добавления записи в таблицу
 //Тест http://localhost/index.php?action=insert&first_name=Valery&last_name=Zhmyshenko&patronymic=Albertovich&passport_data=20221337228&cellphone_number=89009601337&email=valeraborov@yandex.ru&login=valerik228&password=1337
 if($action == "insert"){
@@ -124,6 +184,43 @@ if($action == "insert"){
     $user_id=$user_id->fetch_assoc();
     $usr_id= $user_id['user_id'];
     $result2=$mysql->query("UPDATE `logins` SET `user_login`='$login',`user_password`='$password' WHERE `users_user_id`='$usr_id'");
+
+}
+//Тест http://localhost/index.php?action=transfer&card_id_from=2023217755681337&card_id_to=2025123456789012&change=10
+if($action=="transfer"){
+    $result=$mysql->query("UPDATE `card_balance` SET `balance`=`balance`-'$change' WHERE `cards_card_id`='$card_id_from'");
+    $result2=$mysql->query("UPDATE `card_balance` SET `balance`=`balance`+'$change' WHERE `cards_card_id`='$card_id_to'");
+}
+//Тест http://localhost/index.php?action=card_exists&card_id=2023217755681337
+if($action=="card_exists"){
+    $result=$mysql->query("SELECT `users_user_id`,`cards_card_id` FROM `card_balance` WHERE `cards_card_id`='$card_id'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+//Тест http://localhost/index.php?action=card_exists&card_id=2023217755681337
+if($action=="card_exists"){
+    $result=$mysql->query("SELECT `users_user_id`,`cards_card_id` FROM `card_balance` WHERE `cards_card_id`='$card_id'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+//Тест http://localhost/index.php?action=user_name&user_id=5
+if($action=="user_name"){
+    $result=$mysql->query("SELECT `user_first_name`,`user_last_name`,`user_patronymic` FROM `users` WHERE `user_id`=$user_id");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+//http://localhost/index.php?action=select_password&login=valerik228
+if($action == "select_password"){
+	
+    $result=$mysql->query("SELECT `user_password` FROM `logins` WHERE `user_login`='$login'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
 
 }
 

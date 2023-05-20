@@ -1,16 +1,22 @@
 package com.example.bank;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+//чтобы пофиксить эту типа-ошибку, надо зайти в build.gradle(Module:app) и провоцируешь сихронизацию gradle
+//(копируешь строку с implementation,удаляешь её и вставляешь снова и жмешь кнопку Sync now сверху!)
+//хз параллельно этому нажал правой кнопкой->analyze->Inspect Code->ничего не меняя
+//Пофиксилось
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Exchanger;
 
 /**
  * \brief класс реализует работу с базой данных
@@ -21,7 +27,8 @@ import java.util.concurrent.Exchanger;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.0.112";
+    private static final String SERVER_ADDRESS = "ezhost.alwaysdata.net";
+    //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
     private static final String PORT = "80";
@@ -39,7 +46,7 @@ public class DataBase {
      * \return Возвращается в mapAnswer в виде массива таких хеш мап [{user_password="ЗНАЧЕНИЕ", user_login="ЗНАЧЕНИЕ"}]
      */
     public void selectLogins(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_logins&login=" + login;
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_logins&login=" + login;
         startConnection(link);
 
     }
@@ -86,7 +93,7 @@ public class DataBase {
     public void selectCardBalance(String login) {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_card_balance&login=" + login;
         startConnection(link);
-        // Log.i("mysql",mapAnswer.toString());
+
     }
 
     /**
@@ -160,6 +167,7 @@ public class DataBase {
     public void truncateUsersAndLogins() {
         String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=delete";
         startConnection(link);
+
     }
 
 
@@ -210,8 +218,8 @@ public class DataBase {
      */
     private HashMap<String, String> oneRecordToHashMap(String answer) {
         HashMap<String, String> oneRecordMapAnswer = new HashMap<String, String>();
-        String key = new String();
-        String value = new String();
+        String key = "";
+        String value = "";
         boolean flag = false;
         for (int i = 0; i < answer.length(); i++) {
             if ((answer.charAt(i) != '[') && (answer.charAt(i) != ']') && (answer.charAt(i) != '{')
@@ -256,7 +264,7 @@ public class DataBase {
                 try {
                     Log.i("mysql",
                             "Open connection");
-
+                    mapAnswer = new ArrayList<>();
                     connection = (HttpURLConnection) new URL(link).openConnection();
                     connection.setReadTimeout(10000);
                     connection.setConnectTimeout(15000);
@@ -267,12 +275,13 @@ public class DataBase {
 
                 } catch (Exception e) {
                     Log.i("mysql", "Error: " + e.getMessage());
+                    return;
                 }
                 // receives a response
                 try {
                     InputStream is = connection.getInputStream();
                     BufferedReader br = new BufferedReader(
-                            new InputStreamReader(is, "UTF-8"));
+                            new InputStreamReader(is, StandardCharsets.UTF_8));
                     StringBuilder sb = new StringBuilder();
                     String bfr_st = null;
                     while ((bfr_st = br.readLine()) != null) {
@@ -283,7 +292,7 @@ public class DataBase {
                     answer = sb.toString();
                     Log.i("mysql", "Server answer:" + answer);
                     if (answer.equals("null")) {
-                        mapAnswer = new ArrayList<>();
+                        //mapAnswer = new ArrayList<>();
                     } else {
                         mapAnswer = JsonToArrayListHashMaps(answer);
                     }
@@ -330,6 +339,20 @@ public class DataBase {
             tempCard.paySystemName = this.mapAnswer.get(i).get("pay_systems_supported_pay_system_name");
             tempCard.memberName = this.mapAnswer.get(i).get("member_name");
             tempCard.cardNumber = this.mapAnswer.get(i).get("card_id");
+
+            if (tempCard.paySystemName.equals("MIR")) {
+                tempCard.smallImageResourceID= R.drawable.main_activity_small_card_mir;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_mir;
+            } else if (tempCard.paySystemName.equals("VISA")) {
+                tempCard.smallImageResourceID = R.drawable.main_activity_small_card_visa;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_visa;
+            } else if (tempCard.paySystemName.equals("MASTER CARD")) {
+                tempCard.smallImageResourceID = R.drawable.main_activity_small_card_master_card;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_master_card;
+            }else{
+                tempCard.smallImageResourceID = R.drawable.main_activity_card_unknown;
+                tempCard.bigImageResourceID= R.drawable.all_cards_activity_big_card_mir;
+            }
             bankCards.add(tempCard);
         }
 
@@ -343,4 +366,138 @@ public class DataBase {
         }
         return bankCards;
     }
+    /**
+     * Тест. Проверяет работу всех методов select
+     *
+     * Если завершился успешно, выведется лог по тегом test, Test passed = true
+     *
+     * Если будет ошибка хотя бы в 1 методе, выведется строка с отметками завершенности методов
+     *
+     * Если все методы не прошли тест, то проблема в сервере/настройках адреса сети, портах...
+     *
+     * \param[in] login Строка, которая содержит логин пользователя
+     *
+     * \return Возвращает лог по тегом test, в котором выводится результаты выполнения теста
+     */
+    public void test_allSelectMethods_allSelectMethodsAreWorking(String login){
+        //Arrange
+        HashMap<String,Boolean> testChecks=new HashMap<>();
+        //Act
+        this.selectLogins(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectLogins",true);
+        }
+        else{
+            testChecks.put("selectLogins",false);
+        }
+        this.selectCardBalance(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectCardBalance",true);
+        }
+        else{
+            testChecks.put("selectCardBalance",false);
+        }
+        this.selectCards(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectCards",true);
+        }
+        else{
+            testChecks.put("selectCards",false);
+        }
+        this.selectPaySystems(login);
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectPaySystems",true);
+        }
+        else{
+            testChecks.put("selectPaySystems",false);
+        }
+        this.selectUsers(login+"21");
+        if(!mapAnswer.isEmpty()){
+            testChecks.put("selectUsers",true);
+        }
+        else{
+            testChecks.put("selectUsers",false);
+        }
+        if(testChecks.get("selectLogins")&&testChecks.get("selectCardBalance")&& testChecks.get("selectCards")
+        &&testChecks.get("selectPaySystems")&&testChecks.get("selectUsers")){
+            testChecks.put("testPassed",true);
+        }
+        else{
+            testChecks.put("testPassed",false);
+        }
+        if(testChecks.get("testPassed")){
+            Log.i("test","Test passed = "+testChecks.get("testPassed").toString());
+        }
+        else{
+            Log.i("test","Test passed = "+testChecks.get("testPassed").toString());
+            Log.i("test","Units = "+ testChecks);
+        }
+
+    }
+    /**
+     * Делает http запрос update
+     *
+     * Изменяет баланс с карт. Вычитает change из карты с номером cardIdFrom и добавляет на карту cardIdTo
+     *
+     * cardIdFrom=cardIdFrom-change,cardIdTo=cardIdTo+change
+     *
+     * \param[in] cardIdFrom Строка, которая содержит номер карты с которой переводятся деньги
+     *
+     * \param[in] cardIdTo Строка, которая содержит номер карты на которую переводятся деньги
+     *
+     * \param[in] change Строка, которая содержит на сколько нужно изменить баланс
+     */
+    public void transfer(String cardIdFrom,String cardIdTo,String change) {
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=transfer&card_id_from="+cardIdFrom+"&card_id_to="+cardIdTo+"&change="+change;
+        startConnection(link);
+
+    }
+    public void selectCurrencyRate(String currencyCharCode,Integer numberOfDays){
+        Integer linkDays;
+        Integer count=0;
+        do {//на случай того что день прошел, а база не обновилась
+            linkDays=numberOfDays+count;
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_currency_rate&currency_char_code="+currencyCharCode+
+                    "&number_of_days="+ linkDays;
+            startConnection(link);
+            count++;
+        }while ((mapAnswer.size()<numberOfDays)&& (count <10));
+
+        for(int i=0;i<mapAnswer.size();i++){
+            mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
+        }
+    }
+
+    public void selectAllCurrencyRates(Integer numberOfDays){
+        Integer linkDays;
+        Integer count=0;
+        do {//на случай того что день прошел, а база не обновилась
+            linkDays=numberOfDays+count;
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_all_currency_rates&number_of_days="+ linkDays;
+            startConnection(link);
+            count++;
+            Log.i("mysql",Integer.toString(mapAnswer.size()));
+        }while ((mapAnswer.size()<(numberOfDays*43))&& (count <10));
+
+        for(int i=0;i<mapAnswer.size();i++){
+            mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
+        }
+    }
+
+    public void selectCardExists(String cardId){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=card_exists&card_id=" + cardId;
+        startConnection(link);
+    }
+    public void selectUserName(String userId){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=user_name&user_id=" +userId;
+        startConnection(link);
+    }
+
+    public void selectPassword(String login){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_password&login=" +login;
+        startConnection(link);
+    }
+
+
+
 }
