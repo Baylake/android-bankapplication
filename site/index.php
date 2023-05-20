@@ -73,10 +73,22 @@ if (isset($_GET["change"])) {
     //echo  $change;
 }
 
+//номер карты для cardExists
+if (isset($_GET["card_id"])) {
+    $card_id = $_GET['card_id'];
+    //echo  $card_id;
+}
+
+//user_id Для cardExists
+if (isset($_GET["user_id"])) {
+    $user_id = $_GET['user_id'];
+    //echo  $card_id;
+}
+
 try {
 
 //Подключение к Бд
-    $mysql=new mysqli('localhost','root','root','bank',3307);
+    $mysql=new mysqli('mysql-ezhost.alwaysdata.net','ezhost','ezzhost','ezhost_bank');
     if (!$mysql) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -178,6 +190,38 @@ if($action == "insert"){
 if($action=="transfer"){
     $result=$mysql->query("UPDATE `card_balance` SET `balance`=`balance`-'$change' WHERE `cards_card_id`='$card_id_from'");
     $result2=$mysql->query("UPDATE `card_balance` SET `balance`=`balance`+'$change' WHERE `cards_card_id`='$card_id_to'");
+}
+//Тест http://localhost/index.php?action=card_exists&card_id=2023217755681337
+if($action=="card_exists"){
+    $result=$mysql->query("SELECT `users_user_id`,`cards_card_id` FROM `card_balance` WHERE `cards_card_id`='$card_id'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+//Тест http://localhost/index.php?action=card_exists&card_id=2023217755681337
+if($action=="card_exists"){
+    $result=$mysql->query("SELECT `users_user_id`,`cards_card_id` FROM `card_balance` WHERE `cards_card_id`='$card_id'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
+//Тест http://localhost/index.php?action=user_name&user_id=5
+if($action=="user_name"){
+    $result=$mysql->query("SELECT `user_first_name`,`user_last_name`,`user_patronymic` FROM `users` WHERE `user_id`=$user_id");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+//http://localhost/index.php?action=select_password&login=valerik228
+if($action == "select_password"){
+	
+    $result=$mysql->query("SELECT `user_password` FROM `logins` WHERE `user_login`='$login'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+
 }
 
 //Очищение таблицы

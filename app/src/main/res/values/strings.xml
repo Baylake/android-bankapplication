@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bank</string>
+    <string name="app_name">Donskoy Bank</string>
     <string name="header">Кошелек</string>
     <string name="allCardsButton">Все карты</string>
     <string name="cardBalance">Баланс карты</string>
@@ -19,6 +19,8 @@
     <string name="CurrencyRateExample">12.122</string>
     <string name="CharCodeExample">USD</string>
     <string name="currencyNameExample">Доллар США</string>
+    <string name="accountNumber">Номер счета</string>
+    <string name="amount">Сумма</string>
     <string name="AllRates">Все курсы</string>
     <string name="Digit_1">1</string>
     <string name="Digit_2">2</string>

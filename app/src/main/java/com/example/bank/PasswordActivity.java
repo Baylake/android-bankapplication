@@ -47,12 +47,14 @@ static int count;
     private UsersViewModel mUsersViewModel;
 static String EnteredPass = "";
     private UsersRepository mRepository;
-static final String CorrectPass = "12348";
+static String CorrectPass = "12348";
 public final Context context = this;
+String login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+        getSupportActionBar().hide();
         ImageButton button1 = findViewById(R.id.image_Button1);
         ImageButton button2 = findViewById(R.id.image_Button2);
         ImageButton button3 = findViewById(R.id.image_Button3);
@@ -94,6 +96,14 @@ public final Context context = this;
 //        Log.i("database","before");
 //        mRepository = new UsersRepository(app);
 //        Log.i("database","after");
+        Button button_delete_db = findViewById(R.id.button_delete);
+        button_delete_db.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mUsersViewModel.deleteAllUsers();
+            }
+        });
+
     }
     @Override
     protected void onStart(){
@@ -109,15 +119,26 @@ public final Context context = this;
                 @Override
                 public void onChanged(List<LocalDatabase> localDatabases) {
                     int xd = localDatabases.size();
-                    String log = localDatabases.get(0).userLogin;
+                    try{if (!localDatabases.isEmpty()){dialog.cancel();}}
+                    catch(NullPointerException e){}
+                    String log;
+                    try {log = localDatabases.get(0).userLogin;}
+                    catch (IndexOutOfBoundsException e){log="";}
+                    login=log;
+                    DataBase db=new DataBase();
+                    db.selectPassword(login);
+                    try {CorrectPass=db.mapAnswer.get(0).get("user_password");}
+                    catch (IndexOutOfBoundsException e){}
                     Toast toast1 = new Toast(context);
-                    Toast.makeText(context, "size " + xd +" login "+ log,Toast.LENGTH_SHORT ).show();
+                    toast1.makeText(context, "size " + xd +" login "+ log,Toast.LENGTH_SHORT ).show();
 
                 }
             });
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+
 //        buttonEnter.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -261,6 +282,7 @@ Log.d("count","count = 1");
      **/
     public void startMainActivity(View v) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("login", login);
         startActivity(intent);
     }
     public static String removeLastChar(String str) {

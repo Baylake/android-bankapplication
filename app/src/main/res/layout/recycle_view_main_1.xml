@@ -41,17 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1000" />
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="#FFFFFF"
-                app:icon="@drawable/main_activity_plus"
-                app:iconGravity="textStart"
-                app:iconTint="#1C8C28" />
-
         </LinearLayout>
 
         <LinearLayout

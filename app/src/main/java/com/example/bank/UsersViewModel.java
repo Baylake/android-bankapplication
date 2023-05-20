@@ -33,4 +33,6 @@ public class UsersViewModel extends AndroidViewModel {
 
         public void insert(LocalDatabase user) { mRepository.insert(user); }
 
+    public void deleteAllUsers(){mRepository.deleteAllUsers();}
+
 }

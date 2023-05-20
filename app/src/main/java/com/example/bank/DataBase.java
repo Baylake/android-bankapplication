@@ -1,6 +1,8 @@
 package com.example.bank;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 //чтобы пофиксить эту типа-ошибку, надо зайти в build.gradle(Module:app) и провоцируешь сихронизацию gradle
 //(копируешь строку с implementation,удаляешь её и вставляешь снова и жмешь кнопку Sync now сверху!)
 //хз параллельно этому нажал правой кнопкой->analyze->Inspect Code->ничего не меняя
@@ -25,7 +27,7 @@ import java.util.HashMap;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.1.67";
+    private static final String SERVER_ADDRESS = "ezhost.alwaysdata.net";
     //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
@@ -44,7 +46,7 @@ public class DataBase {
      * \return Возвращается в mapAnswer в виде массива таких хеш мап [{user_password="ЗНАЧЕНИЕ", user_login="ЗНАЧЕНИЕ"}]
      */
     public void selectLogins(String login) {
-        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_logins&login=" + login;
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_logins&login=" + login;
         startConnection(link);
 
     }
@@ -481,5 +483,21 @@ public class DataBase {
             mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
         }
     }
+
+    public void selectCardExists(String cardId){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=card_exists&card_id=" + cardId;
+        startConnection(link);
+    }
+    public void selectUserName(String userId){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=user_name&user_id=" +userId;
+        startConnection(link);
+    }
+
+    public void selectPassword(String login){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_password&login=" +login;
+        startConnection(link);
+    }
+
+
 
 }

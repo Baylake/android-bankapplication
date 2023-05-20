@@ -19,4 +19,7 @@ public interface UserDao {
 
     @Delete
     void delete(LocalDatabase user);
+
+    @Query("DELETE FROM LoginAndPassword")
+    void deleteAllUsers();
 }

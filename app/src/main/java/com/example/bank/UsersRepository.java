@@ -35,5 +35,10 @@ public class UsersRepository {
                 mUserDao.insert(user);
             });
         }
+    void deleteAllUsers() {
+        LocalDatabase.AppDatabase.databaseWriteExecutor.execute(() -> {
+            mUserDao.deleteAllUsers();
+        });
+    }
     }
 

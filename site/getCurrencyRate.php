@@ -6,7 +6,7 @@ try {
     try {
 
         //Подключение к Бд
-        $mysql=new mysqli('localhost','root','root','bank',3307);
+        $mysql=new mysqli('mysql-ezhost.alwaysdata.net','ezhost','ezzhost','ezhost_bank');
         if (!$mysql) {
             die("Connection failed: " . mysqli_connect_error());
         }

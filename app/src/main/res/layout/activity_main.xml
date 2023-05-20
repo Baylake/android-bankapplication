@@ -27,8 +27,16 @@
             android:id="@+id/RecyclerView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="300dp" />
+            android:minHeight="300dp" >
 
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/mainAdvertisement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/advertisement3" />
 
 
     </LinearLayout>

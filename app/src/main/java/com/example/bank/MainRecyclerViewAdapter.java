@@ -25,7 +25,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     private final CurrencyRate currencyRate;
     private static final int TYPE_CARDS = 0;
     private static final int TYPE_CURRENCY = 1;
-
+    String login;
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
@@ -38,11 +38,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     }
 
-    public MainRecyclerViewAdapter(Context context, ArrayList<BankCard> bankCards, CurrencyRate currencyRate) {
+    public MainRecyclerViewAdapter(Context context, ArrayList<BankCard> bankCards, CurrencyRate currencyRate,String login) {
         this.bankCards = bankCards;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
         this.currencyRate = currencyRate;
+        this.login=login;
     }
 
     @NonNull
@@ -122,11 +123,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 holder.imageArrow1.setImageResource(R.drawable.main_activity_arrow_up);
                 holder.imageArrow2.setImageResource(R.drawable.main_activity_arrow_up);
             }
-        } else {
-
-            holder.header.setText(R.string.header);
-
-            Log.i("1", bankCards.toString());
+        }
+        if(position==0) {
+//
+             holder.header.setText(R.string.header);
+//
+//            Log.i("1", bankCards.toString());
             holder.cardBalance1.setText(bankCards.get(0).balance + " ₽");
             holder.cardBalance2.setText(bankCards.get(1).balance + " ₽");
 
@@ -138,7 +140,10 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             holder.allCards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, AllCardsActivity.class));
+                    Intent intent = new Intent(context, AllCardsActivity.class);
+                    intent.putExtra("login", login);
+                    //intent.putExtra("login", login);
+                    context.startActivity(intent);
                 }
             });
 
@@ -149,7 +154,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public int getItemCount() {
-        return bankCards.size();
+        return 2;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -170,7 +175,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             super(view);
 
             if (viewType == TYPE_CARDS) {
-                imageButtonPlus = view.findViewById(R.id.button4);
+                //imageButtonPlus = view.findViewById(R.id.button4);
                 header = view.findViewById(R.id.textView5);
                 allCards = view.findViewById(R.id.button3);
                 cardBalance1 = view.findViewById(R.id.textView6);

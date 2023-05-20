@@ -13,17 +13,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //TODO Сделать фрагмент с полной информацией о картах и возможных действиях(grid)
 public class MainActivity extends AppCompatActivity {
+
     Application app = this.getApplication();
     private UsersViewModel mUsersViewModel = new UsersViewModel(app);
-    final static String[] login = {""};
+    static String login = "";
     static String login_string = "";
     Context context = this;
-
+    ImageView advertisement;
     private MainRecyclerViewAdapter adapter;
     GraphView graph;
 
@@ -31,31 +35,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().hide();
         // Устанавливаем градиентный фон для корневого представления
         View view = findViewById(R.id.ConstraintLayoutMainActivity);
         view.setBackground(AnimatedBackground.createGradient());
+        Bundle arguments = getIntent().getExtras();
+        login = arguments.get("login").toString();
 
-        try {
-
-            mUsersViewModel.getAllUsers().observe(this, new Observer<List<LocalDatabase>>() {
-                @Override
-                public void onChanged(List<LocalDatabase> localDatabases) {
-                    login[0] = localDatabases.get(0).userLogin;
-
-                    Toast toast1 = new Toast(context);
-                    Toast.makeText(context, " login /"+ login[0] +"/",Toast.LENGTH_SHORT ).show();
-                    Log.i("run","ya pokakal");
-                }
-            });
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         Log.i("run","ya obosralsya");
             ArrayList<BankCard> cards = new ArrayList<>();
             DataBase dataBase = new DataBase();
-            Log.i("xd",login[0]);
-            cards = dataBase.getBankCards(login[0]);
+            Log.i("xd",login);
+            cards = dataBase.getBankCards(login);
+            //Log.i("run",cards.toString());
             CurrencyRate currencyRate = new CurrencyRate();
 
             currencyRate.addCurrencyRate("USD", 2);
@@ -66,8 +58,18 @@ public class MainActivity extends AppCompatActivity {
             RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
 
             recyclerView.setLayoutManager(layoutManager);
-            adapter = new MainRecyclerViewAdapter(this, cards, currencyRate);
+            adapter = new MainRecyclerViewAdapter(this, cards, currencyRate,login);
+            advertisement=findViewById(R.id.mainAdvertisement);
+            ArrayList<Integer> ad=setAdvertisement();
+            Random random=new Random();
 
+            advertisement.setImageResource(ad.get(random.nextInt(3)));
+            advertisement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                advertisement.setImageResource(R.drawable.image_void);
+            }
+        });
             recyclerView.setAdapter(adapter);
 
 
@@ -77,7 +79,15 @@ public class MainActivity extends AppCompatActivity {
 //        //Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
 //    }
     }
+    ArrayList<Integer> setAdvertisement(){
+        ArrayList<Integer> ad=new ArrayList<>();
+        ad.add(R.drawable.advertisement1);
+        ad.add(R.drawable.advertisement2);
+        ad.add(R.drawable.advertisement3);
+        return ad;
+    }
     //protected void onStart(Bundle savedInstanceState){
+
 
         //adapter = new MyRecyclerViewAdapter(this, viewColors, pages);
         //adapter.setClickListener(this);

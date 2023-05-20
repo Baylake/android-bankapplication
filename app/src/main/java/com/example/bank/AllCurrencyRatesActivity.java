@@ -7,18 +7,33 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
-
+/**
+ * \brief класс реализует активити, которая показывает все курсы валют
+ *
+ */
 public class AllCurrencyRatesActivity extends AppCompatActivity {
-
+    ///Адаптер для этой активити
     private AllCurrencyRatesRecyclerViewAdapter adapter;
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    CurrencyRate currencyRate=new CurrencyRate();
-    RecyclerView recyclerView;
+    ///Обновление при свайпе
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    ///Курсы валют
+    private CurrencyRate currencyRate=new CurrencyRate();
+    private RecyclerView recyclerView;
+    /**
+     * Задается обновление при свайпе
+     *
+     * Инициализируется градиентный фон
+     *
+     * Делается запрос на все курсы валют за 2 последних дня
+     *
+     * В RecyclerView передается адаптер
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_currency_rates);
-
+        getSupportActionBar().hide();
         mSwipeRefreshLayout = findViewById(R.id.swipeToRefresh);
 
         View view = findViewById(R.id.ConstraintLayoutCurrencyRate);
@@ -49,6 +64,10 @@ public class AllCurrencyRatesActivity extends AppCompatActivity {
             }
         });
     }
+    /**
+     * Функция которая обновляет курсы при свайпе
+     *
+     */
     public void update (){
         DataBase dataBase=new DataBase();
         currencyRate.clear();

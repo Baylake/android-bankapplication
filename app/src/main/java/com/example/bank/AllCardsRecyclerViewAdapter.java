@@ -47,8 +47,8 @@ public class AllCardsRecyclerViewAdapter extends RecyclerView.Adapter<AllCardsRe
         int pos=holder.getAdapterPosition();
 
         holder.textView13.setText(bankCards.get(pos).cardNumber);
-        holder.textView14.setText(bankCards.get(pos).cvvCode);
-        holder.textView15.setText(bankCards.get(pos).date);
+        holder.textView14.setText("CVV: "+bankCards.get(pos).cvvCode);
+        holder.textView15.setText("ДО: "+bankCards.get(pos).date);
         holder.textView16.setText(bankCards.get(pos).balance+" ₽");
 
         holder.linearLayout.removeAllViews();

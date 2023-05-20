@@ -12,22 +12,27 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
-// Создаем класс GraphView, который наследует от View
-// Изменяем класс GraphView, который наследует от View
+/**
+ * \brief класс реализует view, которая рисует график
+ *
+ */
 public class GraphView extends View {
 
-    // Объявляем поля для хранения данных и цветов
-    private float[] data; // массив данных для графика
-    private int graphColor; // цвет линии графика
-    private int axisColor; // цвет осей координат
-    private final Paint paint; // объект для рисования
+    ///Данные графика
+    private float[] data;
+    ///Цвет линии
+    private int graphColor;
+    ///Цвет осей
+    private int axisColor;
+    ///Объект для рисования
+    private Paint paint;
 
-    // Добавляем поля для анимации
-    private int index; // индекс текущей точки графика
+    ///Индекс текущей точки графика
+    private int index;
+    ///Объект для анимации
+    private ValueAnimator animator;
 
-    private ValueAnimator animator; // объект для анимации
-
-    // Создаем конструктор класса, который принимает контекст и атрибуты
+    /// Конструктор класса, который принимает контекст и атрибуты
     public GraphView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // Инициализируем поля значениями по умолчанию или из атрибутов
@@ -49,20 +54,18 @@ public class GraphView extends View {
         }
     }
 
-    // Создаем метод для установки данных для графика
+    /// Устанавливает данные для графика, нормализует и расширяет для красоты
     public void setData(float[] data) {
         this.data = data;
         this.data = addIntermediateElements(this.data,10);
         this.data=normalization(this.data);
         //this.data=normalization(this.data);
-
-
         index = 0; // сбрасываем индекс точки графика
         createAnimator(); // создаем аниматор
         animator.start(); // запускаем анимацию
     }
 
-    // Создаем метод для создания аниматора
+    /// Создания аниматора
     private void createAnimator() {
         if (animator != null) { // если уже есть аниматор
             animator.cancel(); // отменяем его
@@ -79,7 +82,7 @@ public class GraphView extends View {
         });
     }
 
-    // Переопределяем метод onDraw, который отвечает за рисование view
+    /// Метод рисующий график
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -96,21 +99,7 @@ public class GraphView extends View {
             paint.setColor(graphColor); // устанавливаем цвет кисти для графика
             paint.setStrokeWidth(4); // устанавливаем толщину линии в 4 пикселя
             float xStep = (float) width / (data.length - 1); // вычисляем шаг по оси x в пикселях
-            //float yScale;
-//            if(((height / (getMax(data) - getMin(data)))/2)<1){
-//                yScale=1;
-//            }
-//            else {
-//                yScale = (float) (height / (getMax(data) - getMin(data)))/2; // вычисляем масштаб по оси y в пикселях на единицу данных
-//            }
-            //float yScale = (float) (height / (getMax(data) - getMin(data))); // вычисляем масштаб по оси y в пикселях на единицу данных
-            //float yScale = (float) (height / getMin(data))/2; // вычисляем масштаб по оси y в пикселях на единицу данных
-            //float yScale = (float) (height / getMin(data))/2;
-
-
-            //data = addIntermediateElements(data,2);
-            float yScale = height / (getMax(data) - getMin(data));
-            //float yScale = 2;
+            float yScale = (float) (height / (getMax(data) - getMin(data)));
             float prevX = 0; // координата x предыдущей точки графика
             float prevY = height / 2 - data[0] * yScale; // координата y предыдущей точки графика
             for (int i = 1; i <= index; i++) { // проходим по всем элементам массива до текущего индекса анимации
@@ -120,12 +109,11 @@ public class GraphView extends View {
                 prevX = x; // обновляем координату x предыдущей точки
                 prevY = y; // обновляем координату y предыдущей точки
             }
-            //Log.i("draw"," xStep"+Float.toString(xStep)+" yScale"+Float.toString(yScale));
         }
 
     }
 
-    // Создаем вспомогательный метод для нахождения максимального значения в массиве
+    /// Находит максимум массива
     private float getMax(float[] array) {
         float max = array[0]; // инициализируем максимум первым элементом массива
         for (int i = 1; i < array.length; i++) { // проходим по остальным элементам массива
@@ -136,7 +124,7 @@ public class GraphView extends View {
         return max; // возвращаем максимум
     }
 
-    // Создаем вспомогательный метод для нахождения минимального значения в массиве
+    /// Находит минимум массива
     private float getMin(float[] array) {
         float min = array[0]; // инициализируем минимум первым элементом массива
         for (int i = 1; i < array.length; i++) { // проходим по остальным элементам массива
@@ -147,6 +135,7 @@ public class GraphView extends View {
         return min; // возвращаем минимум
     }
 
+    ///Добавляет данные между уже существующими, чтобы график рисовался плавнее
     public float[] addIntermediateElements(float[] array, int n) {//чтобы график рисовался не рывками а плавно
         // Проверяем, что массив не пустой и не содержит один элемент
         if (array == null || array.length <= 1) {
@@ -177,6 +166,7 @@ public class GraphView extends View {
         newArray[index] = array[array.length - 1];
         return newArray;
     }
+    ///Нормализует данные(вычитает Mx из каждой)
     public float[] normalization(float[] data){
         float avg=0;
         for(int i=0;i<data.length;i++){

@@ -28,7 +28,7 @@ public class CashInActivity extends AppCompatActivity {
     private Spinner spinner1;
     private Spinner spinner2;
     private EditText editTextChange;
-    private final String login="valerik228";
+    private String login;
 
     private Button transfer;
     private Button swap;
@@ -39,6 +39,9 @@ public class CashInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_in);
+        getSupportActionBar().hide();
+        Bundle arguments = getIntent().getExtras();
+        login = arguments.get("login").toString();
         title1=findViewById(R.id.textViewTitle1);
         title2=findViewById(R.id.textViewTitle2);
         title3=findViewById(R.id.textViewTitle3);
