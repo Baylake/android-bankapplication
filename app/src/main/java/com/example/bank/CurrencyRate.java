@@ -52,9 +52,17 @@ public class CurrencyRate {
 //        public Float value;
 //        public String date;
 //
+
+    //Надо указать String currencyCharCode="ALL",чтобы запросить все курсы валют
     public void addCurrencyRate(String currencyCharCode, Integer numberOfDays) {
+
         DataBase dataBase = new DataBase();
-        dataBase.selectCurrencyRate(currencyCharCode, numberOfDays);
+        if(currencyCharCode.equals("ALL")){
+            dataBase.selectAllCurrencyRates(numberOfDays);
+        }else{
+            dataBase.selectCurrencyRate(currencyCharCode, numberOfDays);
+        }
+
         for (int i = 0; i < dataBase.mapAnswer.size(); i++) {
             Integer numCode = Integer.parseInt(dataBase.mapAnswer.get(i).get("num_code"));
             String charCode = dataBase.mapAnswer.get(i).get("char_code");

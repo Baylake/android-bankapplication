@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //int[] colors = {Color.parseColor("#1aaa6f"),Color.parseColor("#44ccb6"),Color.WHITE,Color.WHITE};
         // Устанавливаем градиентный фон для корневого представления
         View view = findViewById(R.id.ConstraintLayoutMainActivity);
         view.setBackground(AnimatedBackground.createGradient());
@@ -28,21 +27,14 @@ public class MainActivity extends AppCompatActivity {
         DataBase dataBase=new DataBase();
         cards=dataBase.getBankCards(login);
         CurrencyRate currencyRate=new CurrencyRate();
-        currencyRate.addCurrencyRate("USD",2);
-        currencyRate.addCurrencyRate("EUR",2);
-//        BankCard card1 = new BankCard("1234 5678 9012 3456", "MIR","Dmitro Eblan","1.12.2022","000","0000","1000");
-//        BankCard card2 = new BankCard("1234 5678 9012 3456", "MIR","Dmitro Eblan","1.12.2022","000","0000","1000");
-//        cards.add(card1);
-//        cards.add(card2);
+       // int count=0;
+       // while(currencyRate.currencies.size()<4 && count <10){
+        //    currencyRate.clear();
+            currencyRate.addCurrencyRate("USD",2);
+            currencyRate.addCurrencyRate("EUR",2);
+        //    count++;
+        //}
 
-
-
-//        ArrayList<String> pages = new ArrayList<>();
-//        pages.add("Кошелек");
-//        pages.add("Финансы");
-//        pages.add("Camel");
-//        pages.add("Sheep");
-//        pages.add("Goat");
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.RecyclerView1);
 

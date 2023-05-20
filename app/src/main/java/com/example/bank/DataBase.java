@@ -25,7 +25,7 @@ import java.util.HashMap;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.0.103";
+    private static final String SERVER_ADDRESS = "192.168.1.67";
     //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
@@ -451,14 +451,35 @@ public class DataBase {
 
     }
     public void selectCurrencyRate(String currencyCharCode,Integer numberOfDays){
-        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_currency_rate&currency_char_code="+currencyCharCode+
-                "&number_of_days="+numberOfDays.toString();
-        startConnection(link);
+        Integer linkDays;
+        Integer count=0;
+        do {//на случай того что день прошел, а база не обновилась
+            linkDays=numberOfDays+count;
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_currency_rate&currency_char_code="+currencyCharCode+
+                    "&number_of_days="+linkDays.toString();
+            startConnection(link);
+            count++;
+        }while ((mapAnswer.size()<numberOfDays)&& (count <10));
+
         for(int i=0;i<mapAnswer.size();i++){
             mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
         }
-
     }
 
+    public void selectAllCurrencyRates(Integer numberOfDays){
+        Integer linkDays;
+        Integer count=0;
+        do {//на случай того что день прошел, а база не обновилась
+            linkDays=numberOfDays+count;
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_all_currency_rates&number_of_days="+linkDays.toString();
+            startConnection(link);
+            count++;
+            Log.i("mysql",Integer.toString(mapAnswer.size()));
+        }while ((mapAnswer.size()<(numberOfDays*43))&& (count <10));
+
+        for(int i=0;i<mapAnswer.size();i++){
+            mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
+        }
+    }
 
 }

@@ -12,6 +12,7 @@ if (isset($_GET["action"])) {
     //echo $action;
 }
 
+
 if (isset($_GET["login"])) {
     $login = $_GET['login'];
     //echo $login;
@@ -150,6 +151,17 @@ if($action == "select_currency_rate"){
         $output[]=$e;
     print(json_encode($output));
 }
+
+//http://localhost/index.php?action=select_currency_rate&currency_char_code=USD&number_of_days=30
+if($action == "select_all_currency_rates"){
+    $date_max=date('Y-m-d', (time()));
+    $date_min=date('Y-m-d', (time()-86400*$number_of_days));
+    $result=$mysql->query("SELECT * FROM `currency` WHERE `date`>='$date_min' and `date`<='$date_max'");
+    while($e=$result->fetch_assoc())
+        $output[]=$e;
+    print(json_encode($output));
+}
+
 
 
 //Добавления записи в таблицу
