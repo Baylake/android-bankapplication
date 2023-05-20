@@ -130,7 +130,7 @@ String login;
                     try {CorrectPass=db.mapAnswer.get(0).get("user_password");}
                     catch (IndexOutOfBoundsException e){}
                     Toast toast1 = new Toast(context);
-                    toast1.makeText(context, "size " + xd +" login "+ log,Toast.LENGTH_SHORT ).show();
+                    toast1.makeText(context, " Вы вошли как пользователь "+ log,Toast.LENGTH_SHORT ).show();
 
                 }
             });
