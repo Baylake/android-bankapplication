@@ -27,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 //TODO Сделать Toast с выводом данных sql
 //TODO Подумать  что будет логином для регистрации
+//TODO Исправить везде верстку
+//TODO Разобраться с паролем
 //ЕСЛИ НЕ РАБОТАЕТ СЕРВЕР НАДО ПРОВЕРИТЬ В DATABASE АДРЕС И ПОРТ, АККУРАТНО ОБНОВИТЬ БАЗУ ДАННЫХ
 //В iNDEX.PHP ПРОВЕРИТЬ ПОДКЛЮЧЕНИЕ К БД И ПО НАДОБНОСТИ ДОБАВИТЬ ПОРТ, ЕСЛИ ЛОКАЛЬНЫЙ СЕРВЕР ВКЛЮЧИТЬ ВАЙФАЙ
 //ПРИ ПОДРУБКЕ НА ХОСТ ИЗМЕНИТЬ ПОДКЛЮЧЕНИЕ К БАЗЕ В iNDEX.PHP,В DATABASE.JAVA ИЗМЕНИТЬ АДРЕС. СЛЕДИТЬ ЗА ПОРТАМИ!!1
@@ -40,8 +42,6 @@ public final Context context = this;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
-        DataBase dataBase=new DataBase();
-        dataBase.selectDollarAndEuroCurrencyRate();
         ImageButton button1 = findViewById(R.id.image_Button1);
         ImageButton button2 = findViewById(R.id.image_Button2);
         ImageButton button3 = findViewById(R.id.image_Button3);

@@ -1,7 +1,10 @@
 package com.example.bank;
 
 import android.util.Log;
-
+//чтобы пофиксить эту типа-ошибку, надо зайти в build.gradle(Module:app) и провоцируешь сихронизацию gradle
+//(копируешь строку с implementation,удаляешь её и вставляешь снова и жмешь кнопку Sync now сверху!)
+//хз параллельно этому нажал правой кнопкой->analyze->Inspect Code->ничего не меняя
+//Пофиксилось
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.BufferedReader;
@@ -22,7 +25,7 @@ import java.util.HashMap;
  */
 public class DataBase {
     ///Адрес сайта, который обеспечивает доступ к базе данных
-    private static final String SERVER_ADDRESS = "192.168.0.112";
+    private static final String SERVER_ADDRESS = "192.168.0.103";
     //192.168.1.67 192.168.0.112
 
     ///Порт сайта, который обеспечивает доступ к бд
@@ -447,13 +450,13 @@ public class DataBase {
         startConnection(link);
 
     }
-    public void selectDollarAndEuroCurrencyRate(){
-        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_dollar_and_euro";
+    public void selectCurrencyRate(String currencyCharCode,Integer numberOfDays){
+        String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_currency_rate&currency_char_code="+currencyCharCode+
+                "&number_of_days="+numberOfDays.toString();
         startConnection(link);
         for(int i=0;i<mapAnswer.size();i++){
             mapAnswer.get(i).replace("name",StringEscapeUtils.unescapeJava(mapAnswer.get(i).get("name")));
         }
-
 
     }
 

@@ -31,8 +31,9 @@
                 android:id="@+id/imageViewCurrency1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/main_activity_small_card_master_card" />
+                app:srcCompat="@drawable/currency_rate_activity_nok" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -114,8 +115,9 @@
                 android:id="@+id/imageViewCurrency2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/main_activity_small_card_master_card" />
+                app:srcCompat="@drawable/currency_rate_activity_nok" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

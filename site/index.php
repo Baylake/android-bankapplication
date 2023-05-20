@@ -46,6 +46,16 @@ if (isset($_GET["email"])) {
     //echo $email;
 }
 
+if (isset($_GET["currency_char_code"])) {
+    $currency_char_code = $_GET['currency_char_code'];
+    //echo $login;
+}
+
+if (isset($_GET["number_of_days"])) {
+    $number_of_days = $_GET['number_of_days'];
+    //echo $login;
+}
+
 //карта с которой снимается change при transfere
 if (isset($_GET["card_id_from"])) {
     $card_id_from = $_GET['card_id_from'];
@@ -131,11 +141,11 @@ if($action == "select_card_balance"){
     print(json_encode($output));
 }
 
-//http://localhost/index.php?action=select_dollar_and_euro
-if($action == "select_dollar_and_euro"){
-    $date=date('Y-m-d', (time()-86400));
-    $result=$mysql->query("SELECT * FROM `currency` WHERE (`date`='$date' and `char_code`='USD') or (`date`='$date' and `char_code`='EUR')");
-
+//http://localhost/index.php?action=select_currency_rate&currency_char_code=USD&number_of_days=30
+if($action == "select_currency_rate"){
+    $date_max=date('Y-m-d', (time()));
+    $date_min=date('Y-m-d', (time()-86400*$number_of_days));
+    $result=$mysql->query("SELECT * FROM `currency` WHERE `char_code`='$currency_char_code' and (`date`>='$date_min' and `date`<='$date_max')");
     while($e=$result->fetch_assoc())
         $output[]=$e;
     print(json_encode($output));
