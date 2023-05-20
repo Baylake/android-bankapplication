@@ -19,7 +19,7 @@ public class AllCurrencyRatesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_currency_rates);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout = findViewById(R.id.swipeToRefresh);
 
         View view = findViewById(R.id.ConstraintLayoutCurrencyRate);
         view.setBackground(AnimatedBackground.createGradient());

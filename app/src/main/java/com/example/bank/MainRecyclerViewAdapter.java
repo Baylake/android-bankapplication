@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-//TODO Кнопку Out переместить из recycler_view_all_cards в activity_all_cards
 //TODO парсить с фанпея цену дивайнов в рубли!
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
     private final ArrayList<BankCard> bankCards;
-    private Context context;
+    private final Context context;
 
     private final CurrencyRate currencyRate;
     private static final int TYPE_CARDS = 0;

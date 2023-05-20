@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Bank"
         tools:targetApi="31">
         <activity
+            android:name=".CurrencyRatesGraphActivity"
+            android:exported="false" />
+        <activity
             android:name=".AllCurrencyRatesRecyclerViewAdapter"
             android:exported="false" />
         <activity

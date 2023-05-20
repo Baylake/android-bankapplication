@@ -216,8 +216,8 @@ public class DataBase {
      */
     private HashMap<String, String> oneRecordToHashMap(String answer) {
         HashMap<String, String> oneRecordMapAnswer = new HashMap<String, String>();
-        String key = new String();
-        String value = new String();
+        String key = "";
+        String value = "";
         boolean flag = false;
         for (int i = 0; i < answer.length(); i++) {
             if ((answer.charAt(i) != '[') && (answer.charAt(i) != ']') && (answer.charAt(i) != '{')
@@ -279,7 +279,7 @@ public class DataBase {
                 try {
                     InputStream is = connection.getInputStream();
                     BufferedReader br = new BufferedReader(
-                            new InputStreamReader(is, "UTF-8"));
+                            new InputStreamReader(is, StandardCharsets.UTF_8));
                     StringBuilder sb = new StringBuilder();
                     String bfr_st = null;
                     while ((bfr_st = br.readLine()) != null) {
@@ -428,7 +428,7 @@ public class DataBase {
         }
         else{
             Log.i("test","Test passed = "+testChecks.get("testPassed").toString());
-            Log.i("test","Units = "+testChecks.toString());
+            Log.i("test","Units = "+ testChecks);
         }
 
     }
@@ -456,7 +456,7 @@ public class DataBase {
         do {//на случай того что день прошел, а база не обновилась
             linkDays=numberOfDays+count;
             String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_currency_rate&currency_char_code="+currencyCharCode+
-                    "&number_of_days="+linkDays.toString();
+                    "&number_of_days="+ linkDays;
             startConnection(link);
             count++;
         }while ((mapAnswer.size()<numberOfDays)&& (count <10));
@@ -471,7 +471,7 @@ public class DataBase {
         Integer count=0;
         do {//на случай того что день прошел, а база не обновилась
             linkDays=numberOfDays+count;
-            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_all_currency_rates&number_of_days="+linkDays.toString();
+            String link = "http://" + SERVER_ADDRESS + ":" + PORT + "/index.php?action=select_all_currency_rates&number_of_days="+ linkDays;
             startConnection(link);
             count++;
             Log.i("mysql",Integer.toString(mapAnswer.size()));

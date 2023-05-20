@@ -49,8 +49,8 @@ public class CashInAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflter.inflate(R.layout.cash_in_adapter, null);
         // icon = (ImageView) view.findViewById(R.id.imageView);
-        TextView balance = (TextView) view.findViewById(R.id.textView10);
-        TextView cardNumber = (TextView) view.findViewById(R.id.textView11);
+        TextView balance = view.findViewById(R.id.textView10);
+        TextView cardNumber = view.findViewById(R.id.textView11);
         ImageView cardImage=view.findViewById(R.id.cardImage3);
         balance.setText(bankCards.get(i).balance+" ₽");
         cardNumber.setText(bankCards.get(i).cardNumber);

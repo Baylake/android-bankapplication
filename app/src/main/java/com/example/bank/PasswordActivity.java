@@ -2,7 +2,13 @@ package com.example.bank;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.room.Room;
 
+import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,6 +16,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +32,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+
 //TODO Сделать Toast с выводом данных sql
 //TODO Подумать  что будет логином для регистрации
 //TODO Исправить везде верстку
@@ -35,7 +44,9 @@ import java.net.URL;
 public class PasswordActivity extends AppCompatActivity {
     HttpURLConnection conn;
 static int count;
+    private UsersViewModel mUsersViewModel;
 static String EnteredPass = "";
+    private UsersRepository mRepository;
 static final String CorrectPass = "12348";
 public final Context context = this;
     @Override
@@ -65,12 +76,69 @@ public final Context context = this;
         button9.setOnClickListener(OnClickListener);
         button0.setOnClickListener(OnClickListener);
         button_delete.setOnClickListener(OnClickListener);
-        int count = 0;
-    }
 
+        ButtonTouchListener buttonTouchListener = new ButtonTouchListener(R.color.white, R.color.grey, this);
+// Устанавливаем слушатель касания для кнопки
+        button1.setOnTouchListener(buttonTouchListener);
+        button2.setOnTouchListener(buttonTouchListener);
+        button3.setOnTouchListener(buttonTouchListener);
+        button4.setOnTouchListener(buttonTouchListener);
+        button5.setOnTouchListener(buttonTouchListener);
+        button6.setOnTouchListener(buttonTouchListener);
+        button7.setOnTouchListener(buttonTouchListener);
+        button8.setOnTouchListener(buttonTouchListener);
+        button9.setOnTouchListener(buttonTouchListener);
+        button0.setOnTouchListener(buttonTouchListener);
+        button_delete.setOnTouchListener(buttonTouchListener);
+        int count = 0;
+//        Log.i("database","before");
+//        mRepository = new UsersRepository(app);
+//        Log.i("database","after");
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Application app = this.getApplication();
+        Log.i("database","before");
+        //mRepository = new UsersRepository(app);
+        FragmentManager manager = getSupportFragmentManager();
+        MyDialogFragment dialog = new MyDialogFragment();
+        mUsersViewModel = new UsersViewModel(app);
+        try {
+            mUsersViewModel.getAllUsers().observe(this, new Observer<List<LocalDatabase>>() {
+                @Override
+                public void onChanged(List<LocalDatabase> localDatabases) {
+                    int xd = localDatabases.size();
+                    String log = localDatabases.get(0).userLogin;
+                    Toast toast1 = new Toast(context);
+                    Toast.makeText(context, "size " + xd +" login "+ log,Toast.LENGTH_SHORT ).show();
+
+                }
+            });
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+//        buttonEnter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                UsersViewModel user = new UsersViewModel(app);
+//                String log = dialog.login.getText().toString();
+//                String passw = dialog.pass.getText().toString();
+//                LocalDatabase user_insert = new LocalDatabase(1, log,passw);
+//                user.insert(user_insert);
+//                String entered = user.getAllUsers().toString();
+//                Toast toast1 = new Toast(context);
+//                Toast.makeText(context, entered,Toast.LENGTH_SHORT ).show();
+//            }
+//        });
+        dialog.show(manager, "myDialog");
+        Log.i("database","after");
+        }
     /**
      * Listens two buttons
      **/
+
     View.OnClickListener OnClickListener = new View.OnClickListener() {
 
         @Override
@@ -155,6 +223,9 @@ Log.d("count","count = 1");
                     Log.d("count","count = 5");
                     EnteredPass = EnteredPass + v.getContentDescription();
                     Log.i("count",EnteredPass);
+//                    DataBase dataBase=new DataBase();
+//                    dataBase.selectLogins();
+
                     if (EnteredPass.equals(CorrectPass)) {
                         startMainActivity(v);
                         count = 0;
@@ -176,7 +247,7 @@ Log.d("count","count = 1");
                         Log.i("count",EnteredPass);
                         Log.d("count","count = 0");
                         Toast toast = new Toast(context);
-                        toast.makeText(context, "Неверный пароль, введите пароль снова ",Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(context, "Неверный пароль, введите пароль снова ",Toast.LENGTH_SHORT ).show();
                     }
                     break;
                 default:

@@ -23,7 +23,7 @@ public class AllCardsRecyclerViewAdapter extends RecyclerView.Adapter<AllCardsRe
 
     private final LayoutInflater inflater;
     private final List<BankCard> bankCards;
-    private Context context;
+    private final Context context;
     private Integer clickCounter;
     public AllCardsRecyclerViewAdapter(Context context, List<BankCard> bankCards) {
         this.bankCards = bankCards;

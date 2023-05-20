@@ -31,6 +31,9 @@
     <string name="Digit_9">9</string>
     <string name="Digit_0">0</string>
     <string name="ButtonDelete"></string>
+    <string name="EnterLogin">Введите логин</string>
+    <string name="Login">Логин</string>
+    <string name="Password">Пароль</string>
 
 
 </resources>

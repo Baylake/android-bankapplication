@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GraphView">
+        <!-- Атрибут для цвета линии графика -->
+        <attr name="graphColor" format="color"/>
+        <!-- Атрибут для цвета осей координат -->
+        <attr name="axisColor" format="color"/>
+    </declare-styleable>
+</resources>

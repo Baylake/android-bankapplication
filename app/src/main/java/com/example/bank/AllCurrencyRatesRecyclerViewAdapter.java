@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AllCurrencyRatesRecyclerViewAdapter extends RecyclerView.Adapter<AllCurrencyRatesRecyclerViewAdapter.ViewHolder> {
@@ -39,12 +41,14 @@ public class AllCurrencyRatesRecyclerViewAdapter extends RecyclerView.Adapter<Al
         else{
             holder.name.setText(currencyRate.currencies.get(position).name);
         }
+
         if (currencyRate.currencies.get(position).nominal==1) {
         holder.charCode.setText(currencyRate.currencies.get(position).charCode);
         }
         else {
             holder.charCode.setText(currencyRate.currencies.get(position).nominal + " " + currencyRate.currencies.get(position).charCode);
         }
+
         holder.value.setText(currencyRate.currencies.get(position).value.toString());
         if(currencyRate.currencies.get(position).value>currencyRate.currencies.get(position+43).value){
             holder.arrow.setImageResource(R.drawable.main_activity_arrow_up);
@@ -55,6 +59,17 @@ public class AllCurrencyRatesRecyclerViewAdapter extends RecyclerView.Adapter<Al
         else{
             holder.arrow.setImageResource(R.drawable.main_activity_arrow_down);
         }
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), CurrencyRatesGraphActivity.class);
+                // Передача строки с ключом "message" и значением "Hello"
+                intent.putExtra("charCode", currencyRate.currencies.get(position).charCode);
+                // Запуск SecondActivity
+                view.getContext().startActivity(intent);
+                //startActivity(intent);
+            }
+        });
         //holder.name.setText("123");
 
     }
@@ -71,6 +86,8 @@ public class AllCurrencyRatesRecyclerViewAdapter extends RecyclerView.Adapter<Al
         TextView charCode;
         TextView name;
         TextView value;
+
+        LinearLayout linearLayout;
         ViewHolder(View view){
             super(view);
             image=view.findViewById(R.id.allCurrencyImage1);
@@ -78,6 +95,7 @@ public class AllCurrencyRatesRecyclerViewAdapter extends RecyclerView.Adapter<Al
             charCode=view.findViewById(R.id.allCurrencyCharCode);
             name=view.findViewById(R.id.allCurrencyName);
             value=view.findViewById(R.id.allCurrencyValue);
+            linearLayout=view.findViewById(R.id.allCurrencyLinearLayout);
         }
     }
 

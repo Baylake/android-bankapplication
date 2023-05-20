@@ -8,6 +8,7 @@
     tools:context=".AllCurrencyRatesRecyclerViewAdapter">
 
     <LinearLayout
+        android:id="@+id/allCurrencyLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_shape"

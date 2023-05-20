@@ -28,7 +28,7 @@ public class CashInActivity extends AppCompatActivity {
     private Spinner spinner1;
     private Spinner spinner2;
     private EditText editTextChange;
-    private String login="valerik228";
+    private final String login="valerik228";
 
     private Button transfer;
     private Button swap;
