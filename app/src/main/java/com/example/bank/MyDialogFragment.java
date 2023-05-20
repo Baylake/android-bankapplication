@@ -44,7 +44,6 @@ Context context;
         Button buttonCancel= (Button) view.findViewById(R.id.buttonCancel);
         Button buttonEnter= (Button) view.findViewById(R.id.buttonEnter);
         EditText login= (EditText) view.findViewById(R.id.editText_login);
-        EditText pass= (EditText) view.findViewById(R.id.editText_pass);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,8 +58,7 @@ Context context;
                 Application app = activity.getApplication();
                 UsersViewModel mUsersViewModel = new UsersViewModel(app);
                 String enteredLogin=login.getText().toString();
-                String enteredPass=pass.getText().toString();
-                LocalDatabase user = new LocalDatabase(1, enteredLogin,enteredPass);
+                LocalDatabase user = new LocalDatabase(1, enteredLogin,"");
                 mUsersViewModel.insert(user);
                 cancel();
 
